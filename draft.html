@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <title>CSS Variables Module Level 1</title>
+    <title>CSS Custom Properties Module Level 1</title>
     <link href="http://dev.w3.org/csswg/default.css" rel="stylesheet" type="text/css">
     <link href="http://www.w3.org/StyleSheets/TR/W3C-ED.css" rel="stylesheet" type="text/css">
     <style>
@@ -45,7 +45,8 @@
         <dt>W3C editors: </dt>
         <dd class="vcard"><span class="fn">Luke Macpherson</span>, <span class="org">Google,
             Inc.</span>, <span class="email">macpherson@google.com</span> </dd>
-        <dd class="vcard"> <a class="url" href="http://xanthir.com/contact/"> <span
+        <dd class="vcard"> <a class="url" href="http://xanthir.com/contact/"> <span
+
               class="fn">Tab Atkins Jr.</span>, </a> <span class="org">Google,
             Inc.</span> </dd>
         <dd class="vcard"> <span class="fn">Daniel Glazman</span>, <span class="org">Disruptive
@@ -57,12 +58,17 @@
         </dd>
       </dl>
       <!--begin-copyright-->
-      <p class="hidden"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-          rel="license">Copyright</a> © 2012 <a href="http://www.w3.org/"><abbr
-            title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr
-            title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr
+      <p class="hidden"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
+
+          rel="license">Copyright</a> © 2012 <a href="http://www.w3.org/"><abbr
+
+            title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr
+
+            title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr
+
             title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
-        <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
+        <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
+
           href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
         <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
         and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document
@@ -137,7 +143,7 @@
           <li><a href="#inherit-ref"><span class="secno">3.4. </span> Parent's
               Property References - the ‘<code class="css">$inherit(p,f)</code>’
               notation</a> </li>
-          <li><a href="#using-invalid-references"><span class="secno">3.4. </span>
+          <li><a href="#using-invalid-references"><span class="secno">3.5. </span>
               Using invalid token streams</a> </li>
         </ul>
       </li>
@@ -205,7 +211,8 @@
     <p>To accomplish those goals, this module introduces a new family of
       properties known collectively as <a href="#custom-property"><i>custom
           properties</i></a>, which allow an author to assign arbitrary values
-      to a property with an author-chosen name. This module also introduces <a
+      to a property with an author-chosen name. This module also introduces <a
+
         href="#token-stream-reference"><i>token substitution</i></a>, a
       mechanism which allow an author to then use those values in other
       properties elsewhere in the document. <br>
@@ -523,7 +530,7 @@ three { my-foo: calc($my-bar + 10px); }</pre>
         token stream reference token ($) in the future.<br>
       </p>
     </div>
-    <h3 id="property-reference"><span class="secno">3.1. </span> Property
+    <h3 id="property-reference"><span class="secno">3.2. </span> Property
       Reference - the ‘<code class="css">$p</code>’ notation</h3>
     <p>In this section, the meaning of the dollar token followed directly by an
       identifier is defined as a way to reference the token stream represented
@@ -545,7 +552,8 @@ h1 {
 	color: $my-main-color;
 }</pre>
     </div>
-    <h3 id="get-ref"><span class="secno">3.2. </span>Fallback Values - the ‘<code
+    <h3 id="get-ref"><span class="secno">3.3. </span>Fallback Values - the ‘<code
+
         class="css">$()</code>’ notation</h3>
     <p> In some cases, it can be useful to provide a fallback value for a
       property reference in case the referenced property isn't defined or is
@@ -559,7 +567,8 @@ h1 {
     <p> The ‘<code class="css">$()</code>’ notation allows a default value to
       be specified when referencing a property. The syntax of ‘<code class="css">$()</code>’
       is: </p>
-    <pre><dfn id="get-ref-type">&lt;get-ref&gt;</dfn> = $( <var>IDENT</var> [, <a
+    <pre><dfn id="get-ref-type">&lt;get-ref&gt;</dfn> = $( <var>IDENT</var> [, <a
+
 href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
     <p> If the custom property named by the first argument is inherited or
       declared on this element, its token stream's value is substituted as
@@ -572,18 +581,20 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
       is allowed for consistency with ‘<code class="css">$inherit()</code>’,
       which <em>does</em> do something useful with only one argument. Future
       property references functions will likely be similar. </p>
-    <h3 id="inherit-ref"><span class="secno">3.3. </span> Parent's Property
+    <h3 id="inherit-ref"><span class="secno">3.4. </span> Parent's Property
       References - the ‘$<code class="css">inherit()</code>’ notation</h3>
     <p> Several advanced use-cases for custom properties need the ability to
       reference the value that a property has on the element's parent, rather
       than on the element itself. This can be accomplished with the ‘<code class="css">$inherit()</code>’
       notation: </p>
-    <pre><dfn id="inherit-ref-type">&lt;inherit-ref&gt;</dfn> = inherit( IDENT [, <a
+    <pre><dfn id="inherit-ref-type">&lt;inherit-ref&gt;</dfn> = inherit( IDENT [, <a
+
 href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
     <p> If the element has a parent, and the custom property named by the first
       argument is valid on the parent, the property's value on the parent is
       substituted as normal. Otherwise, if a second argument was provided, the
-      value of the second argument is substituted instead. Otherwise, the ‘<code
+      value of the second argument is substituted instead. Otherwise, the ‘<code
+
         class="css">$inherit()</code>’ represents an <a href="#invalid-token-stream"><i>invalid
           token stream</i></a>. </p>
     <div class="example">
@@ -630,7 +641,7 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
         either as it would immediately produce a cycle between $my-bg and
         $my-bg2, making them both invalid. </p>
     </div>
-    <h3 id="using-invalid-references"><span class="secno">3.4. </span> Using
+    <h3 id="using-invalid-references"><span class="secno">3.5. </span> Using
       invalid token streams</h3>
     <p> When a <a href="#custom-property"><i>custom property</i></a> has its
       initial value, the <a href="#token-stream-reference"><i>token stream</i></a>
@@ -641,7 +652,8 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
           at computed-value time</i></a>. </p>
     <p> A declaration can be <dfn id="invalid-at-computed-value-time">invalid
         at computed-value time</dfn> if it uses an invalid <a href="#token-stream-reference"><i>token
-          stream reference</i></a>, as explained above, or if it uses a valid <a
+          stream reference</i></a>, as explained above, or if it uses a valid <a
+
         href="#token-stream"><i>token stream reference</i></a>, but the property
       value, after substituting its <a href="#token-stream-reference"><i>token
           stream references</i></a>, is invalid. When this happens, the computed
@@ -668,14 +680,14 @@ p { background-color: $my-bad-color; }</pre>
       references can't "fail early" like other syntax errors can, so by the time
       the user agent realizes a property value is invalid, it's already thrown
       away the other cascaded values. </p>
-    <h2 id="cssom"><span class="secno">3. </span> CSSOM</h2>
+    <h2 id="cssom"><span class="secno">4. </span> CSSOM</h2>
     <p> <a href="#custom-property"><i>Custom properties</i></a> are ordinary
       properties, and can be read or modified using all of the existing CSSOM
       APIs for reading or modifying properties. </p>
     <p> The specification extends the IDL definitions in the CSSOM spec to
       represent the use of the ‘<code class="css">$()</code>’ and '<span class="css">$inherit()</span>'
       functions. </p>
-    <h3 id="csspropertyreference-interface"><span class="secno">3.1. </span>
+    <h3 id="csspropertyreference-interface"><span class="secno">4.1. </span>
       Interface CSSPropertyReference</h3>
     <p> The CSSPropertyReference interface represents an use of property token
       stream. </p>
@@ -717,7 +729,7 @@ p { background-color: $my-bad-color; }</pre>
         </dl>
       </dd>
     </dl>
-    <h3 id="cssstyledeclaration-interface"><span class="secno">3.2. </span>
+    <h3 id="cssstyledeclaration-interface"><span class="secno">4.2. </span>
       Additions to the <code>CSSStyleDeclaration</code> Interface</h3>
     <p class="issue"> The set of custom properties is open-ended, so it's not
       clear how best to represent this. Ideally, the CSSOM would expose the
@@ -726,8 +738,8 @@ p { background-color: $my-bad-color; }</pre>
       getter behavior on the interface somehow that deals with custom
       properties, and second, set up a <code>vars</code> map that exposes the
       custom properties that aren't set to their initial value. </p>
-    <h2 id="conformance"><span class="secno">4. </span> Conformance</h2>
-    <h3 id="conventions"><span class="secno">4.1. </span> Document Conventions</h3>
+    <h2 id="conformance"><span class="secno">5. </span> Conformance</h2>
+    <h3 id="conventions"><span class="secno">5.1. </span> Document Conventions</h3>
     <p>Conformance requirements are expressed with a combination of descriptive
       assertions and RFC 2119 terminology. The key words “MUST”, “MUST NOT”,
       “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”,
@@ -735,7 +747,8 @@ p { background-color: $my-bad-color; }</pre>
       interpreted as described in RFC 2119. However, for readability, these
       words do not appear in all uppercase letters in this specification. </p>
     <p>All of the text of this specification is normative except sections
-      explicitly marked as non-normative, examples, and notes. <a href="#RFC2119"
+      explicitly marked as non-normative, examples, and notes. <a href="#RFC2119"
+
         rel="biblioentry">[RFC2119]<!--{{!RFC2119}}--></a> </p>
     <p>Examples in this specification are introduced with the words “for
       example” or are set apart from the normative text with <code>class="example"</code>,
@@ -746,7 +759,7 @@ p { background-color: $my-bad-color; }</pre>
     <p>Informative notes begin with the word “Note” and are set apart from the
       normative text with <code>class="note"</code>, like this: </p>
     <p class="note">Note, this is an informative note. </p>
-    <h3 id="conformance-classes"><span class="secno">4.2. </span> Conformance
+    <h3 id="conformance-classes"><span class="secno">5.2. </span> Conformance
       Classes</h3>
     <p>Conformance to CSS Custom Properties is defined for three conformance
       classes: </p>
@@ -779,7 +792,7 @@ p { background-color: $my-bad-color; }</pre>
       generic CSS grammar and the individual grammars of each feature in this
       module, and meet all other conformance requirements of style sheets as
       described in this module. </p>
-    <h3 id="partial"><span class="secno">4.3. </span> Partial Implementations</h3>
+    <h3 id="partial"><span class="secno">5.3. </span> Partial Implementations</h3>
     <p>So that authors can exploit the forward-compatible parsing rules to
       assign fallback values, CSS renderers <strong>must</strong> treat as
       invalid (and <a href="http://www.w3.org/TR/CSS21/conform.html#ignore">ignore
@@ -790,7 +803,7 @@ p { background-color: $my-bad-color; }</pre>
       multi-value property declaration: if any value is considered invalid (as
       unsupported values must be), CSS requires that the entire declaration be
       ignored. </p>
-    <h3 id="experimental"><span class="secno">4.4. </span> Experimental
+    <h3 id="experimental"><span class="secno">5.4. </span> Experimental
       Implementations</h3>
     <p>To avoid clashes with future CSS features, the CSS2.1 specification
       reserves a <a href="http://www.w3.org/TR/CSS21/syndata.html#vendor-keywords">prefixed
@@ -800,7 +813,7 @@ p { background-color: $my-bad-color; }</pre>
       experimental. The CSS Working Group recommends that implementations use a
       vendor-prefixed syntax for such features, including those in W3C Working
       Drafts. This avoids incompatibilities with future changes in the draft. </p>
-    <h3 id="testing"><span class="secno">4.5. </span>Non-Experimental
+    <h3 id="testing"><span class="secno">5.5. </span>Non-Experimental
       Implementations</h3>
     <p>Once a specification reaches the Candidate Recommendation stage,
       non-experimental implementations are possible, and implementors should
@@ -816,7 +829,7 @@ p { background-color: $my-bad-color; }</pre>
       can be found from on the CSS Working Group's website at <a href="http://www.w3.org/Style/CSS/Test/">http://www.w3.org/Style/CSS/Test/</a>.
       Questions should be directed to the <a href="http://lists.w3.org/Archives/Public/public-css-testsuite">public-css-testsuite@w3.org</a>
       mailing list. </p>
-    <h3 id="cr-exit-criteria"><span class="secno">4.6. </span> CR Exit Criteria</h3>
+    <h3 id="cr-exit-criteria"><span class="secno">5.6. </span> CR Exit Criteria</h3>
     <p> For this specification to be advanced to Proposed Recommendation, there
       must be at least two independent, interoperable implementations of each
       feature. Each feature may be implemented by a different set of products,
@@ -907,7 +920,8 @@ p { background-color: $my-bad-color; }</pre>
       </li>
       <li>&lt;get-ref&gt;, <a href="#get-ref-type" title="&lt;get-ref&gt;"><strong>3.2.</strong></a>
       </li>
-      <li>invalid at computed-value time, <a href="#invalid-at-computed-value-time"
+      <li>invalid at computed-value time, <a href="#invalid-at-computed-value-time"
+
           title="invalid at computed-value time"><strong>3.4.</strong></a> </li>
       <li>invalid variable, <a href="#invalid-token-stream" title="invalid variable"><strong>3.4.</strong></a>
       </li>
@@ -921,7 +935,8 @@ p { background-color: $my-bad-color; }</pre>
           </li>
         </ul>
       </li>
-      <li><a href="#value-type"><var>&lt;value&gt;</var></a>, <a href="#value-type"
+      <li><a href="#value-type"><var>&lt;value&gt;</var></a>, <a href="#value-type"
+
           title="&lt;value&gt;"><strong>2.</strong></a> </li>
       <li>&lt;var&gt;, <a href="#type-var" title="&lt;var&gt;"><strong>3.1.</strong></a>
       </li>
