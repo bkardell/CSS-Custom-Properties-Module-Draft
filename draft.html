@@ -133,7 +133,7 @@
               Property Reference - the ‘<code class="css">$p</code>’ notation</a>
           </li>
           <li><a href="#get-ref"><span class="secno">3.3. </span> Fallback
-              Values - the ‘<code class="css">$get(p,f)</code>’ notation</a> </li>
+              Values - the ‘<code class="css">$(p,f)</code>’ notation</a> </li>
           <li><a href="#inherit-ref"><span class="secno">3.4. </span> Parent's
               Property References - the ‘<code class="css">$inherit(p,f)</code>’
               notation</a> </li>
@@ -249,7 +249,7 @@
       specification to reuse the concept for different token streams.&nbsp;</p>
     <p> A token stream reference is substituted for its value in the property
       value at computed-value time. If a declaration, once all token stream
-      references are substituted in, is invalid, then the declaration is <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#invalid-at-computed-value-time"><i>invalid
+      references are substituted in, is invalid, then the declaration is <a href="#invalid-at-computed-value-time"><i>invalid
           at computed-value time</i></a>.&nbsp;</p>
     <p> </p>
     <div class="example">
@@ -285,12 +285,12 @@ p { background-color: $my-length; }</pre>
     <div class="example">Given the following CSS file, a conforming user agent
       should display each matching DIV element with a white text over a green
       background.<br>
-      <pre>div {<br>   my-green: green;<br>   my-white: white;<br>   my-red: red;<br>   my-yellow: yellow;<br>   <br>   color: $my-white;                         // valid<br>   color: $get(my-red, 10px);                 // invalid<br>   <br>   background-color: yellow;                 // valid<br>   background-color: $get(my-green, blue);    // valid<br>}</pre>
+      <pre>div {<br>   my-green: green;<br>   my-white: white;<br>   my-red: red;<br>   my-yellow: yellow;<br>   <br>   color: $my-white;                         // valid<br>   color: $(my-red, 10px);                 // invalid<br>   <br>   background-color: yellow;                 // valid<br>   background-color: $(my-green, blue);    // valid<br>}</pre>
     </div>
     <div class="note">
       <p>The goal of this restriction is to allow proper fallback for still
         unsupported features.</p>
-      <pre>.selector {<br>   background: $get(my-bg-color);<br>   background: $get(my-super-cool-bg, unsupported-feature(...));<br>}<br></pre>
+      <pre>.selector {<br>   background: $(my-bg-color);<br>   background: $(my-super-cool-bg, unsupported-feature(...));<br>}<br></pre>
       <p>The second declaration of the '<span class="css">background</span>'
         property will probably be discarded by the user agent because it doesn't
         understand the '<span class="css">unsupported-feature()</span>'
@@ -370,7 +370,7 @@ p { background-color: $my-length; }</pre>
       not assign a particular meaning to <a href="#custom-property"><i>custom
           properties</i></a> or attach a specific effect to them beyond the bare
       minimum that comes from them being valid properties. </p>
-    <p>A <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#custom-property"><i>custom
+    <p>A <a href="#custom-property"><i>custom
           property</i></a> declaration defines a <span class="needWork">token
         stream</span> whose attachment is the element the declaration applies to
       and whose scope is the element itself and all its descendant. It means
@@ -386,10 +386,10 @@ p { background-color: $my-length; }</pre>
         named "my-header-color" on the root element, and assigns to it the value
         "#06c". This property is then inherited to the elements in the rest of
         the document. Its value can be referenced via an appropriate: </p>
-      <pre>h1 { color: $get(my-header-color); }</pre>
+      <pre>h1 { color: $(my-header-color); }</pre>
       <p> The preceding rule is equivalent to writing ‘<code class="css">color:
           #06c;</code>’, except that the name makes the origin of the color
-        clearer, and if ‘<code class="css">$get(my-header-color)</code>’ is used
+        clearer, and if ‘<code class="css">$(my-header-color)</code>’ is used
         on other elements in the document, all of the uses can be updated at
         once by changing the ‘<code class="property">my-header-color</code>’
         property on the root element. <br>
@@ -412,7 +412,7 @@ p { background-color: $my-length; }</pre>
       <pre>:root { my-color: blue; }
 div { my-color: green; }
 #alert { my-color: red; }
-* { color: $get(my-color); }
+* { color: $(my-color); }
 
 &lt;p&gt;I inherited blue from the root element!&lt;/p&gt;
 &lt;div&gt;I got green set directly on me!&lt;/div&gt;
@@ -433,7 +433,7 @@ div { my-color: green; }
         reference: </p>
       <pre>:root {
 	my-main-color: #c06;
-	my-accent-background: linear-gradient(to top, $get(my-main-color), white);
+	my-accent-background: linear-gradient(to top, $(my-main-color), white);
 }</pre>
       <p> The ‘<code class="property">my-accent-background</code>’ property
         (along with any other properties that use ‘<code class="css">$my-main-color</code>’)
@@ -496,7 +496,7 @@ three { my-foo: calc($my-bar + 10px); }</pre>
       allows the value of a <a href="#custom-property"><i>custom property</i></a>
       on an element to be substituted into another property token stream which
       has access to it. There are several ways to reference properties: via the
-      general-purpose token-substitution token, via the ‘<code class="css">$get()</code>’
+      general-purpose token-substitution token, via the ‘<code class="css">$()</code>’
       notation, or via the ‘<code class="css">$inherit()</code>’ notation to get
       a token stream attached to the element's parent. </p>
     <p> A property reference can be used in place of any component value in any
@@ -546,7 +546,7 @@ h1 {
 }</pre>
     </div>
     <h3 id="get-ref"><span class="secno">3.2. </span>Fallback Values - the ‘<code
-        class="css">$get()</code>’ notation</h3>
+        class="css">$()</code>’ notation</h3>
     <p> In some cases, it can be useful to provide a fallback value for a
       property reference in case the referenced property isn't defined or is
       invalid. </p>
@@ -556,18 +556,18 @@ h1 {
       property reference so that the theming stylesheet can just override the
       properties it cares about, rather than being forced to provide values for
       all of them. </p>
-    <p> The ‘<code class="css">$get()</code>’ notation allows a default value to
-      be specified when referencing a property. The syntax of ‘<code class="css">$get()</code>’
+    <p> The ‘<code class="css">$()</code>’ notation allows a default value to
+      be specified when referencing a property. The syntax of ‘<code class="css">$()</code>’
       is: </p>
-    <pre><dfn id="get-ref-type">&lt;get-ref&gt;</dfn> = $get( <var>IDENT</var> [, <a
+    <pre><dfn id="get-ref-type">&lt;get-ref&gt;</dfn> = $( <var>IDENT</var> [, <a
 href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
     <p> If the custom property named by the first argument is inherited or
       declared on this element, its token stream's value is substituted as
       normal. If it's invalid, and a second argument was provided, the value of
-      the second argument is substituted instead. Otherwise, the ‘<code class="css">$get()</code>’
+      the second argument is substituted instead. Otherwise, the ‘<code class="css">$()</code>’
       represents an <a href="#invalid-token-stream"><i>invalid token stream</i></a>.
     </p>
-    <p class="note"> Note that using ‘<code class="css">$get()</code>’ without a
+    <p class="note"> Note that using ‘<code class="css">$()</code>’ without a
       second argument offers no benefits over using the $ syntax by itself. This
       is allowed for consistency with ‘<code class="css">$inherit()</code>’,
       which <em>does</em> do something useful with only one argument. Future
@@ -626,7 +626,7 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
         ".comment" has on it as well. Because custom properties don't have any
         effect on rendering until they're used, they can pass these values
         through the document without these kinds of side effects. </p>
-      <p> The ‘<code class="css">$get()</code>’ notation can't be used here
+      <p> The ‘<code class="css">$()</code>’ notation can't be used here
         either as it would immediately produce a cycle between $my-bg and
         $my-bg2, making them both invalid. </p>
     </div>
@@ -673,7 +673,7 @@ p { background-color: $my-bad-color; }</pre>
       properties, and can be read or modified using all of the existing CSSOM
       APIs for reading or modifying properties. </p>
     <p> The specification extends the IDL definitions in the CSSOM spec to
-      represent the use of the ‘<code class="css">$get()</code>’ and '<span class="css">$inherit()</span>'
+      represent the use of the ‘<code class="css">$()</code>’ and '<span class="css">$inherit()</span>'
       functions. </p>
     <h3 id="csspropertyreference-interface"><span class="secno">3.1. </span>
       Interface CSSPropertyReference</h3>
