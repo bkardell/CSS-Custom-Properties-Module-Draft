@@ -582,19 +582,17 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
       which <em>does</em> do something useful with only one argument. Future
       property references functions will likely be similar. </p>
     <h3 id="inherit-ref"><span class="secno">3.4. </span> Parent's Property
-      References - the ‘$<code class="css">inherit()</code>’ notation</h3>
+      References - the ‘<code class="css">$inherit()</code>’ notation</h3>
     <p> Several advanced use-cases for custom properties need the ability to
       reference the value that a property has on the element's parent, rather
       than on the element itself. This can be accomplished with the ‘<code class="css">$inherit()</code>’
       notation: </p>
-    <pre><dfn id="inherit-ref-type">&lt;inherit-ref&gt;</dfn> = inherit( IDENT [, <a
-
-href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
+    <pre><dfn id="inherit-ref-type">&lt;inherit-ref&gt;</dfn> = $inherit( <var>IDENT</var> [, <a
+      href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
     <p> If the element has a parent, and the custom property named by the first
       argument is valid on the parent, the property's value on the parent is
       substituted as normal. Otherwise, if a second argument was provided, the
       value of the second argument is substituted instead. Otherwise, the ‘<code
-
         class="css">$inherit()</code>’ represents an <a href="#invalid-token-stream"><i>invalid
           token stream</i></a>. </p>
     <div class="example">
