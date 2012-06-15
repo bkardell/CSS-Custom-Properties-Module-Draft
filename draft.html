@@ -150,7 +150,7 @@
       <li><a href="#cssom"><span class="secno">4. </span> CSSOM</a>
         <ul class="toc">
           <li><a href="#csspropertyreference-interface"><span class="secno">4.1.
-              </span> Interface CSSPropertyReference</a> </li>
+              </span> Interface <code>CSSPropertyReference</code></a> </li>
           <li><a href="#cssstyledeclaration-interface"><span class="secno">4.2.
               </span> Additions to the <code>CSSStyleDeclaration</code>
               Interface</a> </li>
@@ -276,9 +276,8 @@ p { background-color: $my-length; }</pre>
       also contains a fallback value that can be used if the referenced token
       stream is found to be not appropriate for the purpose it has been used
       for.</p>
-    <p class="needWork">THIS FEATURE IS AT RISK<br>
-    </p>
-    <p>In case a token stream reference specify a fallback value, that value
+    <p class="needWork">THE FOLLOWING FEATURE IS AT RISK:</p>
+    <p>Whenever a token stream reference specify a fallback value, that value
       should be valid for the purpose it has been used for. In case this isn't
       the case, the token reference invalidates the declaration that contains
       it. If it's impossible to check if the provided fallback value is valid or
@@ -292,7 +291,7 @@ p { background-color: $my-length; }</pre>
     <div class="example">Given the following CSS file, a conforming user agent
       should display each matching DIV element with a white text over a green
       background.<br>
-      <pre>div {<br>   my-green: green;<br>   my-white: white;<br>   my-red: red;<br>   my-yellow: yellow;<br>   <br>   color: $my-white;                         // valid<br>   color: $(my-red, 10px);                 // invalid<br>   <br>   background-color: yellow;                 // valid<br>   background-color: $(my-green, blue);    // valid<br>}</pre>
+      <pre>div {<br>   my-green: green;<br>   my-white: white;<br>   my-red: red;<br>   my-yellow: yellow;<br>   <br>   color: $my-white;                         // valid<br>   color: $(my-red, 10px);                   // invalid<br>   <br>   background-color: yellow;                 // valid<br>   background-color: $(my-green, blue);      // valid<br>}</pre>
     </div>
     <div class="note">
       <p>The goal of this restriction is to allow proper fallback for still
@@ -378,7 +377,7 @@ p { background-color: $my-length; }</pre>
           properties</i></a> or attach a specific effect to them beyond the bare
       minimum that comes from them being valid properties. </p>
     <p>A <a href="#custom-property"><i>custom
-          property</i></a> declaration defines a <span class="needWork">token
+          property</i></a> declaration defines a <a href="#token-stream">token
         stream</span> whose attachment is the element the declaration applies to
       and whose scope is the element itself and all its descendant. It means
       that for each <a href="#custom-property"><i>custom property</i></a>,
@@ -703,27 +702,26 @@ p { background-color: $my-bad-color; }</pre>
       <dd>
         <dl>
           <dt><code>providerName</code> of type <code>DOMString</code> </dt>
-          <dd>This attribute represents the name of the reference provider used
-            to retreive the <span class="needWork">provided value</span>.
-            Changing this attribute changes the token stream provider. <span class="needWork">Valid
-              values includes '' and 'inherit'.</span></dd>
+          <dd>This attribute represents the name of the provider used
+            to <a href="referencing-properties">reference</a> the <a href="token-stream">token stream</a>.
+            Changing this attribute changes the token stream reference provider. <span class="needWork">Valid
+              values includes <a href="#get-ref">''</a> and <a href="#inherit-ref">'inherit'</a>.</span></dd>
           <dt> <code>propertyName</code> of type <code>DOMString</code> </dt>
           <dd>This attribute represents the first argument to the function.
             Changing this attribute changes the <a href="#custom-property"><i>custom
                 property</i></a> being referred to. </dd>
           <dt><code>fallbackValue</code> of type any </dt>
           <dd>This attribute represents the second argument to the function.
-            Changing this attribute changes the <span class="needWork">fallback
+            Changing this attribute changes the <a href="token-stream-reference">fallback
               value</span> used as a replacement for property token stream
-            whenever the <span class="needWork">provided value</span> is <code>null</code>
-            or invalid. </dd>
+            whenever the referenced <a href="#token-stream">token stream</span> is invalid. </dd>
           <dt><code>providedValue</code> of type <code>any</code>, readonly </dt>
           <dd>This attribute represents the value provided by the token stream
-            provider represented by the <code>providerName</code> property. If
-            the <code>providerName</code> doesn't map to any valid provider or
+            provider defined by the <code>providerName</code> property. If
+            the <code>providerName</code> doesn't map to any defined provider or
             if the provider can't return a value given the propertyName
             arguments it received, the value of this attribute is guaranteed to
-            be null.</dd>
+            be <code>null</code>.</dd>
         </dl>
       </dd>
     </dl>
