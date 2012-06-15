@@ -212,9 +212,9 @@
     <p>This makes it easier to read large files, as seemingly-arbitrary values
       now have informative names, and makes editing such files much easier and
       less error-prone, as one only has to change the value once, at the
-      variable definition site, and the change will propagate to all uses of
-      that variable automatically. This also bring a new tool for web authors to
-      shim unimplemented or custom CSS properties.<br>
+      property declaration site, and the change will propagate to anywhere that
+      property is referenced automatically. This also bring a new tool for web
+      authors to shim unimplemented or custom CSS properties.<br>
     </p>
     <h3 id="placement"><span class="secno">1.1. </span> Module Interactions</h3>
     <p> This module defines a new type of primitive value, the <a href="#variable"><i>token
@@ -248,14 +248,14 @@
       as a kind of token source reference, but leaves the door open to other
       specification to reuse the concept for different token sources.&nbsp;</p>
     <p> A token source reference is substituted for its value in the property
-      value at computed-value time. If a declaration, once all variables are
-      substituted in, is invalid, the declaration is <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#invalid-at-computed-value-time"><i>invalid
+      value at computed-value time. If a declaration, once all token source
+      references are substituted in, is invalid, then the declaration is <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#invalid-at-computed-value-time"><i>invalid
           at computed-value time</i></a>.&nbsp;</p>
     <p> </p>
     <div class="example">
       <p> For example, the following usage of a property reference is fine from
-        a syntax standpoint, but results in nonsense when the variable is
-        substituted in: </p>
+        a syntax standpoint, but results in nonsense when the token source
+        reference is substituted in: </p>
       <pre>:root { my-length: 20px; }
 p { background-color: $my-length; }</pre>
       <p> Since ‘<code class="css">20px</code>’ is an invalid value for ‘<code class="property">background-color</code>’,
@@ -335,8 +335,8 @@ p { background-color: $my-length; }</pre>
         </tr>
         <tr>
           <th>Computed Value: </th>
-          <td>specified value with variables substituted (but see prose for
-            "invalid token sources") </td>
+          <td>specified value with token source references substituted (but see
+            prose for "invalid token sources") </td>
         </tr>
         <tr>
           <th>Media: </th>
@@ -369,7 +369,7 @@ p { background-color: $my-length; }</pre>
       to be valid but meaningless as they are meant solely for allowing authors
       to pass custom data around their page, similar to the <a href="http://www.w3.org/TR/html5/global-attributes.html#embedding-custom-non-visible-data-with-the-data-attributes">custom
         data attributes</a> in HTML. Other specifications and user agents must
-      not assign a particular meaning to <a href="#variable-property"><i>variable
+      not assign a particular meaning to <a href="#variable-property"><i>custom
           properties</i></a> or attach a specific effect to them beyond the bare
       minimum that comes from them being valid properties. </p>
     <p>A <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#variable-property"><i>custom
@@ -390,10 +390,10 @@ p { background-color: $my-length; }</pre>
         the document. Its value can be referenced via an appropriate: </p>
       <pre>h1 { color: get(my-header-color); }</pre>
       <p> The preceding rule is equivalent to writing ‘<code class="css">color:
-          #06c;</code>’, except that the variable name makes the origin of the
-        color clearer, and if ‘<code class="css">get(my-header-color)</code>’ is
-        used on other elements in the document, all of the uses can be updated
-        at once by changing the ‘<code class="property">my-header-color</code>’
+          #06c;</code>’, except that the name makes the origin of the color
+        clearer, and if ‘<code class="css">get(my-header-color)</code>’ is used
+        on other elements in the document, all of the uses can be updated at
+        once by changing the ‘<code class="property">my-header-color</code>’
         property on the root element. <br>
       </p>
       <p>This change can even happen as the document is already loaded, for
@@ -407,10 +407,10 @@ p { background-color: $my-length; }</pre>
       conditional rules, can be used in HTML's <code>style</code> attribute,
       can be read or set using the CSSOM, etc.. </p>
     <div class="example">
-      <p> If a <a href="#variable-property"><i>variable property</i></a> is
+      <p> If a <a href="#variable-property"><i>custom property</i></a> is
         declared multiple times, the standard cascade rules help resolve it.
-        Variables always draw from the computed value of the associated variable
-        property on the same element: </p>
+        Property references always draw from the computed value of the
+        associated custom property on the same element: </p>
       <pre>:root { my-color: blue; }
 div { my-color: green; }
 #alert { my-color: red; }
@@ -423,15 +423,16 @@ div { my-color: green; }
   &lt;p&gt;I'm red too, because of inheritance!&lt;/p&gt;
 &lt;/div&gt;</pre>
     </div>
-    <p> <a href="#variable-property"><i>Variable properties</i></a> may use
-      variables in their own values to build up composite variables. This can
-      create cyclic dependencies where two or more <a href="#variable-property"><i>variable
-          properties</i></a> each attempt to use the variable that the other
-      defines; doing so makes all the <a href="#variable-property"><i>variable
-          properties</i></a> involved in the cycle compute to their initial
-      value (which is a guaranteed-invalid value). </p>
+    <p> <a href="#variable-property"><i>Custom properties</i></a> may use
+      property references in their own values to build up composite properties.
+      This can create cyclic dependencies where two or more <a href="#variable-property"><i>custom
+          properties</i></a> each attempt to use a reference to each other;
+      doing so makes all the <a href="#variable-property"><i>custom properties</i></a>
+      involved in the cycle compute to their initial value (which is a
+      guaranteed-invalid value). </p>
     <div class="example">
-      <p> This example shows a variable property safely using a variable: </p>
+      <p> This example shows a custom property safely using a property
+        reference: </p>
       <pre>:root {
 	my-main-color: #c06;
 	my-accent-background: linear-gradient(to top, get(my-main-color), white);
@@ -442,27 +443,28 @@ div { my-color: green; }
         property is changed. </p>
     </div>
     <div class="example invalid-example">
-      <p> On the other hand, this example shows an invalid instance of variables
-        depending on each other: </p>
+      <p> On the other hand, this example shows an invalid instance of custom
+        properties depending on each other: </p>
       <pre>:root {
 	my-first-property: calc($my-second-property + 20px);
 	my-second-property: calc($my-first-property - 20px);
 }</pre>
       <p> Both ‘<code class="property">my-one</code>’ and ‘<code class="property">my-two</code>’
-        now define <a href="#invalid-variable"><i>invalid variables</i></a>
+        now define <a href="#invalid-variable"><i>invalid token streams</i></a>
         rather than lengths. </p>
     </div>
-    <p> It is important to note that <a href="#variable-property"><i>variable
-          properties</i></a> resolve any <a href="#variable"><i>variables</i></a>
-      in their values at computed-value time, which occurs <em>before</em> the
-      value is inherited. In general, cyclic dependencies occur only when
-      multiple variable properties on the same element refer to each other;
-      variable properties defined on elements higher in the element tree can
-      never cause a cyclic reference with properties defined on elements lower
-      in the element tree. </p>
+    <p> It is important to note that <a href="#variable-property"><i>custom
+          properties</i></a> resolve any <a href="#variable"><i>token source
+          reference</i></a> in their values at computed-value time, which occurs
+      <em>before</em> the value is inherited. In general, cyclic dependencies
+      occur only when multiple custom properties on the same element refer to
+      each other;
+      custom properties defined on elements higher in the element tree can never
+      cause a cyclic reference with properties defined on elements lower in the
+      element tree. </p>
     <div class="example">
-      <p> For example, given the following structure, these variable properties
-        are <strong>not</strong> cyclic, and all define valid variables: </p>
+      <p> For example, given the following structure, these custom properties
+        are <strong>not</strong> cyclic, and all define valid token sources: </p>
       <pre>&lt;one&gt;&lt;two&gt;&lt;three /&gt;&lt;/two&gt;&lt;/one&gt;
 one   { my-foo: 10px; }
 two   { my-bar: calc($my-foo + 10px); }
@@ -470,17 +472,17 @@ three { my-foo: calc($my-bar + 10px); }</pre>
       <p> The &lt;one&gt; element defines a value for ‘<code class="property">my-foo</code>’.
         The &lt;two&gt; element inherits this value, and additionally assigns a
         value to ‘<code class="property">my-bar</code>’ by referencing
-        &lt;one&gt;'s ‘<code class="css">my-foo</code>’ variable. Finally, the
+        &lt;one&gt;'s ‘<code class="css">my-foo</code>’ property. Finally, the
         &lt;three&gt; element inherits the ‘<code class="property">my-bar</code>’
-        value <em>after</em> variable substitution (in other words, it sees the
-        value ‘<code class="css">calc(10px + 10px)</code>’), and then redefines
-        ‘<code class="property">my-foo</code>’ in terms of that value. Since the
-        value it inherited for ‘<code class="property">my-bar</code>’ no longer
-        contains a reference to the ‘<code class="property">my-foo</code>’
+        value <em>after</em> token source substitution (in other words, it sees
+        the value ‘<code class="css">calc(10px + 10px)</code>’), and then
+        redefines ‘<code class="property">my-foo</code>’ in terms of that value.
+        Since the value it inherited for ‘<code class="property">my-bar</code>’
+        no longer contains a reference to the ‘<code class="property">my-foo</code>’
         property defined on &lt;one&gt;, defining ‘<code class="property">my-foo</code>’
         using ‘<code class="css">$my-bar</code>’ is not cyclic, and actually
-        defines a value that will eventually (when referenced as a variable in a
-        normal property) resolve to ‘<code class="css">30px</code>’. <br>
+        defines a value that will eventually (when referenced as a token source
+        in a normal property) resolve to ‘<code class="css">30px</code>’. <br>
       </p>
     </div>
     <br>
@@ -501,16 +503,16 @@ three { my-foo: calc($my-bar + 10px); }</pre>
       has access to it. There are several ways to reference properties: via the
       general-purpose token-substitution token, via the ‘<code class="css">get()</code>’
       notation, or via the ‘<code class="css">inherit()</code>’ notation to get
-      at a variable on the element's parent. </p>
+      a token source attached to the element's parent. </p>
     <p> A property reference can be used in place of any component value in any
       property on an element. <br>
     </p>
     <p class="note">This specification doesn't define a way to use property
       references anywhere else. An UA conforming to this specification should
-      not accept variable references in property names, in selectors, or
+      not accept token stream references in property names, in selectors, or
       anywhere else besides property values - doing so either produces either an
       invalid value or a valid value that nonetheless has no relation to the
-      variable of that name. </p>
+      property of that name. </p>
     <br>
     <h3 id="var-glyph"><span class="secno">3.1. </span> The $ Prefix</h3>
     <p>The dollar prefix is used in CSS to indicate a token source reference. In
@@ -519,20 +521,20 @@ three { my-foo: calc($my-bar + 10px); }</pre>
       represented by the custom property attached to the current element whose
       name is equal to the value of IDENT.<br>
     </p>
-    <p> Formally, the syntax of a variable is: </p>
+    <p> Formally, the syntax of a property reference is: </p>
     <pre><dfn id="type-var">&lt;var&gt;</dfn> = "$" <var>IDENT</var></pre>
     <p> ...where <var>IDENT</var> is anything matching the IDENT production in
       <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
         Chapter 4</a>. </p>
     <div class="example">
-      <p> For example, the following code defines and uses a variable named
-        "main-color". </p>
+      <p> For example, the following code defines and uses a custom property
+        named "my-main-color". </p>
       <pre>:root { 
 	my-main-color: blue;
 }
 
 h1 { 
-	color: $main-color;
+	color: $my-main-color;
 }</pre>
     </div>
     <div class="note">
@@ -550,14 +552,16 @@ h1 {
     <h3 id="var-function"><span class="secno">3.2. </span>Fallback Values - the
       ‘<code class="css">get()</code>’ notation</h3>
     <p> In some cases, it can be useful to provide a fallback value for a
-      variable in case the variable isn't defined or is invalid. </p>
-    <p> For example, if a site uses variables to provide "hooks" for
-      customization, expecting the variables to be defined in a separate custom
-      stylesheet, the main stylesheet can use default values for its variable so
-      that the theming stylesheet can just override the variables it cares
-      about, rather than being forced to provide values for all of them. </p>
+      property reference in case the referenced property isn't defined or is
+      invalid. </p>
+    <p> For example, if a site uses custom properties to provide "hooks" for
+      customization, expecting the custom property to be defined in a separate
+      custom stylesheet, the main stylesheet can use default values for its
+      property reference so that the theming stylesheet can just override the
+      properties it cares about, rather than being forced to provide values for
+      all of them. </p>
     <p> The ‘<code class="css">get()</code>’ notation allows a default value to
-      be specified when referencing a variable. The syntax of ‘<code class="css">get()</code>’
+      be specified when referencing a property. The syntax of ‘<code class="css">get()</code>’
       is: </p>
     <pre><dfn id="default-var-type">&lt;default-var&gt;</dfn> = get( IDENT [, <a
 href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
@@ -565,26 +569,28 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
       declared on this element, its token source's value is substituted as
       normal. If it's invalid, and a second argument was provided, the value of
       the second argument is substituted instead. Otherwise, the ‘<code class="css">get()</code>’
-      represents an <a href="#invalid-variable"><i>invalid variable</i></a>. </p>
+      represents an <a href="#invalid-variable"><i>invalid token source</i></a>.
+    </p>
     <p class="note"> Note that using ‘<code class="css">get()</code>’ without a
       second argument offers no benefits over using the $ syntax by itself. This
       is allowed for consistency with ‘<code class="css">inherit()</code>’,
       which <em>does</em> do something useful with only one argument. Future
-      variable functions will likely be similar. </p>
-    <h3 id="parent-var-notation"><span class="secno">3.3. </span> Getting the
-      Parent's Variable - the ‘<code class="css">inherit()</code>’ notation</h3>
+      property references functions will likely be similar. </p>
+    <h3 id="parent-var-notation"><span class="secno">3.3. </span>Referencing
+      the Parent's Properties - the ‘<code class="css">inherit()</code>’
+      notation</h3>
     <p> Several advanced use-cases for custom properties need the ability to
       reference the value that a property has on the element's parent, rather
       than on the element itself. This can be accomplished with the ‘<code class="css">inherit()</code>’
       notation: </p>
     <pre><dfn id="parent-var-notation-type">&lt;parent-var&gt;</dfn> = inherit( IDENT [, <a
 href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
-    <p> If the element has a parent, and the variable named by the first
-      argument is valid on the parent, the variable's value on the parent is
+    <p> If the element has a parent, and the custom property named by the first
+      argument is valid on the parent, the property's value on the parent is
       substituted as normal. Otherwise, if a second argument was provided, the
       value of the second argument is substituted instead. Otherwise, the ‘<code
         class="css">inherit()</code>’ represents an <a href="#invalid-variable"><i>invalid
-          variable</i></a>. </p>
+          token source</i></a>. </p>
     <div class="example">
       <p> For example, ‘<code class="css">inherit()</code>’ can be used to
         implement a behavior that's very similar to the ‘<code class="css">toggle()</code>’
@@ -622,37 +628,39 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
         on <code>&lt;div class='main'&gt;</code> so that ‘<code class="css">toggle()</code>’
         can actually see the right value, that will make the ".main" elements
         cover up the ‘<code class="property">background-image</code>’ that
-        ".comment" has on it as well. Because variables don't have any effect on
-        rendering until they're used, they can pass these values through the
-        document without these kinds of side effects. </p>
+        ".comment" has on it as well. Because custom properties don't have any
+        effect on rendering until they're used, they can pass these values
+        through the document without these kinds of side effects. </p>
       <p> The ‘<code class="css">get()</code>’ notation can't be used here
         either as it would immediately produce a cycle between $my-bg and
         $my-bg2, making them both invalid. </p>
     </div>
     <h3 id="using-invalid-variables"><span class="secno">3.4. </span> Using
-      Invalid Variables</h3>
-    <p> When a <a href="#variable-property"><i>variable property</i></a> has
-      its initial value, the <a href="#variable"><i>variable</i></a> it defines
-      represents an <dfn id="invalid-variable">invalid variable</dfn>. Using an
-      <a href="#invalid-variable"><i>invalid variable</i></a> in a property
-      value (including other <a href="#variable-property"><i>variable
+      invalid token sources<br>
+    </h3>
+    <p> When a <a href="#variable-property"><i>custom property</i></a> has its
+      initial value, the <a href="#variable"><i>token source</i></a> it defines
+      represents an <dfn id="invalid-variable">invalid token source</dfn>.
+      Using an <a href="#invalid-variable"><i>invalid token source</i></a> in a
+      property value (including other <a href="#variable-property"><i>custom
           properties</i></a>) makes the declaration <a href="#invalid-at-computed-value-time"><i>invalid
           at computed-value time</i></a>. </p>
     <p> A declaration can be <dfn id="invalid-at-computed-value-time">invalid
-        at computed-value time</dfn> if it uses an invalid <a href="#variable"><i>variable</i></a>,
-      as explained above, or if it uses a valid <a href="#variable"><i>variable</i></a>,
-      but the property value, after substituting its <a href="#variable"><i>variables</i></a>,
-      is invalid. When this happens, the computed value of the property is
-      either the property's inherited value or its initial value depending on
-      whether the property is inherited or not, respectively. </p>
+        at computed-value time</dfn> if it uses an invalid <a href="#variable"><i>token
+          source</i></a>, as explained above, or if it uses a valid <a href="#variable"><i>token
+          source</i></a>, but the property value, after substituting its <a href="#variable"><i>token
+          stream references</i></a>, is invalid. When this happens, the computed
+      value of the property is either the property's inherited value or its
+      initial value depending on whether the property is inherited or not,
+      respectively. </p>
     <div class="example">
       <p> For example, in the following code: </p>
-      <pre>:root { my-false-color: 20px; }
+      <pre>:root { my-bad-color: 20px; }
 p { background-color: red; }
-p { background-color: $my-false-color; }</pre>
+p { background-color: $my-bad-color; }</pre>
       <p> the &lt;p&gt; elements will have transparent backgrounds (the initial
         value for ‘<code class="property">background-color</code>’), rather than
-        red backgrounds. The same would happen if the variable itself was
+        red backgrounds. The same would happen if the reference itself was
         invalid. </p>
       <p> Note the difference between this and what happens if the author had
         just written ‘<code class="css">background-color: 20px</code>’ directly
@@ -661,16 +669,17 @@ p { background-color: $my-false-color; }</pre>
           red</code>’ rule would be used instead. </p>
     </div>
     <p class="note"> The <a href="#invalid-at-computed-value-time"><i>invalid
-          at computed-value time</i></a> concept exists because variables can't
-      "fail early" like other syntax errors can, so by the time the user agent
-      realizes a property value is invalid, it's already thrown away the other
-      cascaded values. </p>
+          at computed-value time</i></a> concept exists because token source
+      references can't "fail early" like other syntax errors can, so by the time
+      the user agent realizes a property value is invalid, it's already thrown
+      away the other cascaded values. </p>
     <h2 id="cssom"><span class="secno">4. </span> CSSOM</h2>
-    <p> <a href="#variable-property"><i>Variable properties</i></a> are
-      ordinary properties, and can be read or modified using all of the existing
-      CSSOM APIs for reading or modifying properties. </p>
+    <p> <a href="#variable-property"><i>Custom properties</i></a> are ordinary
+      properties, and can be read or modified using all of the existing CSSOM
+      APIs for reading or modifying properties. </p>
     <p> The specification extends the IDL definitions in the CSSOM spec to
-      represent the use of the ‘<code class="css">get()</code>’ function. </p>
+      represent the use of the ‘<code class="css">get()</code>’ and '<span class="css">inherit()</span>'
+      functions. </p>
     <h3 id="cssom-cssvariable"><span class="secno">4.1. </span> Interface
       CSSPropertyReference</h3>
     <p> The CSSPropertyReference interface represents an use of property token
@@ -689,12 +698,13 @@ p { background-color: $my-false-color; }</pre>
       <dd>
         <dl>
           <dt><code>providerName</code> of type <code>DOMString</code> </dt>
-          <dd>This attribute represents the name of the function used. Changing
-            this attribute changes the token source provider. <span class="needWork">Valid
+          <dd>This attribute represents the name of the reference provider used
+            to retreive the <span class="needWork">provided value</span>.
+            Changing this attribute changes the token source provider. <span class="needWork">Valid
               values includes 'get' and 'inherit'.</span></dd>
           <dt> <code>propertyName</code> of type <code>DOMString</code> </dt>
           <dd>This attribute represents the first argument to the function.
-            Changing this attribute changes the <a href="#variable-property"><i>variable
+            Changing this attribute changes the <a href="#variable-property"><i>custom
                 property</i></a> being referred to. </dd>
           <dt><code>fallbackValue</code> of type any </dt>
           <dd>This attribute represents the second argument to the function.
@@ -714,13 +724,13 @@ p { background-color: $my-false-color; }</pre>
     </dl>
     <h3 id="cssstyledeclaration-interface"><span class="secno">4.2. </span>
       Additions to the <code>CSSStyleDeclaration</code> Interface</h3>
-    <p class="issue"> The set of variable properties is open-ended, so it's not
+    <p class="issue"> The set of custom properties is open-ended, so it's not
       clear how best to represent this. Ideally, the CSSOM would expose the
       current set of properties with a non-initial value and allow setting of
       arbitrary properties. The most natural way seems to be to first, set up a
-      getter behavior on the interface somehow that deals with variable
+      getter behavior on the interface somehow that deals with custom
       properties, and second, set up a <code>vars</code> map that exposes the
-      variable properties that aren't set to their initial value. </p>
+      custom properties that aren't set to their initial value. </p>
     <h2 id="conformance"><span class="secno">5. </span> Conformance</h2>
     <h3 id="conventions"><span class="secno">5.1. </span> Document Conventions</h3>
     <p>Conformance requirements are expressed with a combination of descriptive
@@ -743,7 +753,7 @@ p { background-color: $my-false-color; }</pre>
     <p class="note">Note, this is an informative note. </p>
     <h3 id="conformance-classes"><span class="secno">5.2. </span> Conformance
       Classes</h3>
-    <p>Conformance to CSS Variables Module is defined for three conformance
+    <p>Conformance to CSS Custom Properties is defined for three conformance
       classes: </p>
     <dl>
       <dt><dfn id="style-sheet" title="style sheet!!as conformance class">style
@@ -758,22 +768,22 @@ p { background-color: $my-false-color; }</pre>
       <dd>A <a href="http://www.w3.org/TR/CSS21/conform.html#user-agent">UA</a>
         that writes a style sheet. </dd>
     </dl>
-    <p>A style sheet is conformant to CSS Variables Module if all of its
+    <p>A style sheet is conformant to CSS Custom Properties if all of its
       declarations that use properties defined in this module have values that
       are valid according to the generic CSS grammar and the individual grammars
       of each property as given in this module. </p>
-    <p>A renderer is conformant to CSS Variables Module if, in addition to
+    <p>A renderer is conformant to CSS Custom Properties if, in addition to
       interpreting the style sheet as defined by the appropriate specifications,
-      it supports all the features defined by CSS Variables Module by parsing
+      it supports all the features defined by CSS Custom Properties by parsing
       them correctly and rendering the document accordingly. However, the
       inability of a UA to correctly render a document due to limitations of the
       device does not make the UA non-conformant. (For example, a UA is not
       required to render color on a monochrome monitor.) </p>
-    <p>An authoring tool is conformant to CSS Variables Module if it writes
-      style sheets that are syntactically correct according to the generic CSS
-      grammar and the individual grammars of each feature in this module, and
-      meet all other conformance requirements of style sheets as described in
-      this module. </p>
+    <p>An authoring tool is conformant to CSS Custom Properties Module if it
+      writes style sheets that are syntactically correct according to the
+      generic CSS grammar and the individual grammars of each feature in this
+      module, and meet all other conformance requirements of style sheets as
+      described in this module. </p>
     <h3 id="partial"><span class="secno">5.3. </span> Partial Implementations</h3>
     <p>So that authors can exploit the forward-compatible parsing rules to
       assign fallback values, CSS renderers <strong>must</strong> treat as
@@ -950,8 +960,8 @@ p { background-color: $my-false-color; }</pre>
           <td>(nothing, see prose) </td>
           <td>all elements </td>
           <td>yes </td>
-          <td>specified value with variables substituted (but see prose for
-            "invalid variables") </td>
+          <td>specified value with token source references substituted (but see
+            prose for "invalid toke sources") </td>
           <td>all </td>
         </tr>
       </tbody>
@@ -960,13 +970,8 @@ p { background-color: $my-false-color; }</pre>
   </body>
 </html>
 <!-- Keep this comment at the end of the file
-Local variables:mode: sgml
-sgml-declaration:"~/SGML/HTML4.decl"sgml-default-doctype-name:"html"
-sgml-minimize-attributes:tsgml-nofill-elements:("pre" "style" "br")
-sgml-live-element-indicator:tsgml-omittag:nil
-sgml-shorttag:nilsgml-namecase-general:t
-sgml-general-insert-case:lowersgml-always-quote-attributes:t
-sgml-indent-step:nilsgml-indent-data:t
-sgml-parent-document:nilsgml-exposed-tags:nil
-sgml-local-catalogs:nilsgml-local-ecat-files:nil
-End:-->
+Local variables:mode: sgmlsgml-declaration:"~/SGML/HTML4.decl"sgml-default-doctype-name:"html"
+sgml-minimize-attributes:tsgml-nofill-elements:("pre" "style" "br")sgml-live-element-indicator:tsgml-omittag:nil
+sgml-shorttag:nilsgml-namecase-general:tsgml-general-insert-case:lowersgml-always-quote-attributes:t
+sgml-indent-step:nilsgml-indent-data:tsgml-parent-document:nilsgml-exposed-tags:nil
+sgml-local-catalogs:nilsgml-local-ecat-files:nilEnd:-->
