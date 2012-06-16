@@ -46,7 +46,8 @@
         <dt>W3C editors: </dt>
         <dd class="vcard"><span class="fn">Luke Macpherson</span>, <span class="org">Google,
             Inc.</span>, <span class="email">macpherson@google.com</span> </dd>
-        <dd class="vcard"> <a class="url" href="http://xanthir.com/contact/"> <span
+        <dd class="vcard"> <a class="url" href="http://xanthir.com/contact/"> <span
+
               class="fn">Tab Atkins Jr.</span>, </a> <span class="org">Google,
             Inc.</span> </dd>
         <dd class="vcard"> <span class="fn">Daniel Glazman</span>, <span class="org">Disruptive
@@ -58,12 +59,17 @@
         </dd>
       </dl>
       <!--begin-copyright-->
-      <p class="hidden"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-          rel="license">Copyright</a> © 2012 <a href="http://www.w3.org/"><abbr
-            title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr
-            title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr
+      <p class="hidden"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
+
+          rel="license">Copyright</a> © 2012 <a href="http://www.w3.org/"><abbr
+
+            title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr
+
+            title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr
+
             title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
-        <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
+        <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
+
           href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
         <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
         and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document
@@ -125,7 +131,7 @@
               Custom property</a></li>
         </ul>
       </li>
-      <li><a href="#referencing-properties"><span class="secno">3. </span>
+      <li><a href="#referencing-token-streams"><span class="secno">3. </span>
           Referencing token streams</a>
         <ul class="toc">
           <li><a href="#dollar-glyph"><span class="secno">3.1. </span> The $
@@ -178,7 +184,8 @@
       <li class="no-num"><a href="#property-index">Property index</a> </li>
     </ul>
     <!--end-toc-->
-    <h2 id="intro"><span class="secno">1. </span> Introduction</h2>
+    <h2 id="intro"><span class="secno">1. </span> Introduction<br>
+    </h2>
     <p><em>This section is not normative.</em> </p>
     <p>Modern documents and applications contain a significant amount of styling
       information, often spread across numerous related stylesheets.&nbsp; By
@@ -233,7 +240,8 @@
     <p>To accomplish those goals, this module introduces a new family of
       properties known collectively as <a href="#custom-property"><i>custom
           properties</i></a>, which allow an author to assign arbitrary values
-      to a property with an author-chosen name. This module also introduces <a
+      to a property with an author-chosen name. This module also introduces <a
+
         href="#token-stream-reference"><i>property references</i></a>, a
       mechanism which allows an author to reuse the value of those properties
       into other CSS properties.&nbsp;</p>
@@ -270,7 +278,8 @@
     <h3 id="token-stream"><span class="secno">2.1. </span> Token stream</h3>
     <p>A <strong>token stream</strong> is a dynamic list of CSS tokens, as
       defined in the <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
-        Chapter 4</a> specification or in the CSS Syntax specification <a href="#CSS3-SYNTAX"
+        Chapter 4</a> specification or in the CSS Syntax specification <a href="#CSS3-SYNTAX"
+
         rel="biblioentry">[CSS3-SYNTAX]<!--{{!CSS3-SYNTAX}}--></a> when it will
       reach the W3C Recommendation status. To be valid, a token stream must
       conform to the <a href="#value-type">&lt;value&gt;</a> type (a token
@@ -284,7 +293,7 @@
     <div class="note">
       <p>A token stream is generally best described by its list of tokens, its
         attachment (the object it belongs to) and its scope (the locations where
-        it can be <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#token-stream-reference">referenced</a>).</p>
+        it can be <a href="#token-stream-reference">referenced</a>).</p>
     </div>
     <h3 id="token-stream-reference"><span class="secno">2.2. </span> Token
       stream reference</h3>
@@ -304,7 +313,7 @@
       </p>
       <pre>p { property: $attachment(token-stream-name, fallback value); }</pre>
       <p>The '<code class="css">$</code>' token indicates the start of a token
-        stream reference (see <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#dollar-prefix">The
+        stream reference (see <a href="#dollar-prefix">The
           $ Prefix</a> section). <br>
         The '<code class="css">attachment</code>' token represent the attachment
         of the token stream.<br>
@@ -612,7 +621,7 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
     <h3 id="property-reference"><span class="secno">3.2. </span> Property
       References - definition</h3>
     <p> A <strong>property reference</strong> is a token stream reference that
-      allows the value of a <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#custom-property"><i>custom
+      allows the value of a <a href="#custom-property"><i>custom
           property</i></a> defined on an element to be substituted into another
       property which has access to it. <br>
     </p>
@@ -620,7 +629,7 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
     <h3 id="get-ref"><span class="secno">3.3. </span>Property References - the
       ‘<code class="css">$()</code>’ notation</h3>
     <p> Formally, the syntax of a property reference is: </p>
-    <pre><dfn id="ref-type">&lt;ref&gt;</dfn> = "$" "(" <var>IDENT</var> [, <a href="file:///B:/Documents/GitHub/CSS-Custom-Properties-Module-Draft/draft.html#value-type"><var>&lt;value&gt;</var></a> ]? ")"
+    <pre><dfn id="ref-type">&lt;ref&gt;</dfn> = "$" "(" <var>IDENT</var> [, <a href="#value-type"><var>&lt;value&gt;</var></a> ]? ")"
 </pre>
     <p> ...where <var>IDENT</var> is anything matching the IDENT production in
       <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
@@ -663,16 +672,19 @@ h1 {
       reference the value that a property has on the parent element, rather than
       on the element itself. This can be accomplished with the ‘<code class="css">$inherit()</code>’
       notation: </p>
-    <pre><dfn id="inherit-ref-type">&lt;inherit-ref&gt;</dfn> = $inherit( <var>IDENT</var> [, <a
+    <pre><dfn id="inherit-ref-type">&lt;inherit-ref&gt;</dfn> = $inherit( <var>IDENT</var> [, <a
+
 href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
     <p> If the element has a parent, and the custom property named by the first
       argument is valid on the parent, the property's value on the parent is
       substituted as normal. Otherwise, if a second argument was provided, the
-      value of the second argument is substituted instead. Otherwise, the ‘<code
+      value of the second argument is substituted instead. Otherwise, the ‘<code
+
         class="css">$inherit()</code>’ represents an <a href="#invalid-token-stream"><i>invalid
           token stream</i></a>. </p>
     <div class="example">
-      <p> <img style="float: right; border-radius: 3px;" alt="Nested comments feature another color"
+      <p> <img style="float: right; border-radius: 3px;" alt="Nested comments feature another color"
+
           src="./comments-toggle.png">For example, ‘<code class="css">$inherit()</code>’
         can be used to implement a behavior that's very similar to the ‘<code class="css">toggle()</code>’
         notation from [[CSS3VALUES]]. <br>
@@ -734,7 +746,8 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
           at computed-value time</i></a>. </p>
     <p> A declaration can be <dfn id="invalid-at-computed-value-time">invalid
         at computed-value time</dfn> if it uses an invalid <a href="#token-stream-reference"><i>token
-          stream reference</i></a>, as explained above, or if it uses a valid <a
+          stream reference</i></a>, as explained above, or if it uses a valid <a
+
         href="#token-stream"><i>token stream reference</i></a>, but the property
       value, after substituting its <a href="#token-stream-reference"><i>token
           stream references</i></a>, is invalid. When this happens, the computed
@@ -827,7 +840,8 @@ p { background-color: $(my-bad-color); }</pre>
       interpreted as described in RFC 2119. However, for readability, these
       words do not appear in all uppercase letters in this specification. </p>
     <p>All of the text of this specification is normative except sections
-      explicitly marked as non-normative, examples, and notes. <a href="#RFC2119"
+      explicitly marked as non-normative, examples, and notes. <a href="#RFC2119"
+
         rel="biblioentry">[RFC2119]<!--{{!RFC2119}}--></a> </p>
     <p>Examples in this specification are introduced with the words “for
       example” or are set apart from the normative text with <code>class="example"</code>,
@@ -1034,5 +1048,4 @@ p { background-color: $(my-bad-color); }</pre>
   </body>
 </html>
 <!-- Keep this comment at the end of the file
-Local variables:mode: sgmlsgml-declaration:"~/SGML/HTML4.decl"sgml-default-doctype-name:"html"sgml-minimize-attributes:tsgml-nofill-elements:("pre" "style" "br")sgml-live-element-indicator:tsgml-omittag:nilsgml-shorttag:nilsgml-namecase-general:tsgml-general-insert-case:lowersgml-always-quote-attributes:tsgml-indent-step:nilsgml-indent-data:tsgml-parent-document:nilsgml-exposed-tags:nil
-sgml-local-catalogs:nilsgml-local-ecat-files:nilEnd:-->
+Local variables:mode: sgmlsgml-declaration:"~/SGML/HTML4.decl"sgml-default-doctype-name:"html"sgml-minimize-attributes:tsgml-nofill-elements:("pre" "style" "br")sgml-live-element-indicator:tsgml-omittag:nilsgml-shorttag:nilsgml-namecase-general:tsgml-general-insert-case:lowersgml-always-quote-attributes:tsgml-indent-step:nilsgml-indent-data:tsgml-parent-document:nilsgml-exposed-tags:nilsgml-local-catalogs:nilsgml-local-ecat-files:nilEnd:-->
