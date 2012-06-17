@@ -135,8 +135,8 @@
               Property Reference - definition</a> </li>
           <li><a href="#get-ref"><span class="secno">3.3. </span>Property
               References - the ‘<code class="css">$()</code>’ notation</a> </li>
-          <li><a href="#inherit-ref"><span class="secno">3.4. </span> Parent's
-              Property References - the ‘<code class="css">$inherit()</code>’
+          <li><a href="#parent-ref"><span class="secno">3.4. </span> Parent's
+              Property References - the ‘<code class="css">$parent()</code>’
               notation</a> </li>
           <li><a href="#using-invalid-references"><span class="secno">3.5. </span>
               Using invalid token streams</a> </li>
@@ -144,8 +144,8 @@
       </li>
       <li><a href="#cssom"><span class="secno">4. </span> CSSOM</a>
         <ul class="toc">
-          <li><a href="#csspropertyreference-interface"><span class="secno">4.1.
-              </span> Interface <code>CSSPropertyReference</code></a> </li>
+          <li><a href="#csstokenstreamreference-interface"><span class="secno">4.1.
+              </span> Interface <code>CSSTokenStreamReference</code></a> </li>
           <li><a href="#cssstyledeclaration-interface"><span class="secno">4.2.
               </span> Additions to the <code>CSSStyleDeclaration</code>
               Interface</a> </li>
@@ -272,8 +272,8 @@
       stream reference</h3>
     <p>A <strong>token stream reference</strong> is a set of CSS tokens used in
       a property declaration to reference a <a href="#token-stream">token
-        stream</a> and, optionally, an second token stream called the <b>fallback
-        value</b>.</p>
+        stream</a> called the <b>provided value</b> and, optionally, an second
+      token stream called the <b>fallback value</b>.</p>
     <p>At computed-value time, token stream references are substituted for the
       tokens contained in their referenced token stream or, if it is invalid,
       for the tokens of their fallback value.&nbsp;</p>
@@ -284,12 +284,12 @@
       <p>The '<code class="css">$</code>' token indicates the start of a token
         stream reference (see <a href="#dollar-prefix">The $ Prefix</a>
         section). <br>
-        The '<code class="css">attachment</code>' token represent the attachment
-        of the token stream.<br>
-        The '<code class="css">token-stream-name</code>' token represent the
+        The '<code class="css">attachment</code>' token represents the
+        attachment of the token stream.<br>
+        The '<code class="css">token-stream-name</code>' token represents the
         name of the token stream.<br>
         The '<code class="css">fallback value</code>' tokens represent the
-        fallback token stream of the reference.</p>
+        fallback value of the reference.</p>
       <p>If the referenced token stream contained the '<code>value</code>'
         token, the previous declaration is equivalent to:</p>
       <pre>p { property: value; }<br></pre>
@@ -360,8 +360,8 @@ p { background-color: $(my-length); }</pre>
           properties</i></a>, which can be used as <a href="#token-stream-reference"><i>token
           streams</i></a>. Custom properties are author-defined properties which
       do not have any direct impact on the document rendering or behavior but
-      can be used indirectly (by reference) as values to other CSS properties. </p>
-    <p class="note">Future revisions of this specification, may or may not allow
+      can be used indirectly (by reference) as values in other CSS properties. </p>
+    <p class="note">Future revisions of this specification may or may not allow
       any CSS property to be used as a token stream. </p>
     <table class="propdef">
       <tbody>
@@ -546,12 +546,12 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
       <pre>p { property: $attachment(token-stream-name, fallback value); }</pre>
       <p>The '<code class="css">$</code>' token indicates the start of a token
         stream reference. <br>
-        The '<code class="css">attachment</code>' token represent the attachment
-        of the token stream.<br>
-        The '<code class="css">token-stream-name</code>' token represent the
+        The '<code class="css">attachment</code>' token represents the
+        attachment of the token stream.<br>
+        The '<code class="css">token-stream-name</code>' token represents the
         name of the token stream.<br>
-        The (optional) '<code class="css">fallback value</code>' tokens
-        represent the fallback token stream of the reference.</p>
+        The '<code class="css">fallback value</code>' tokens represent the
+        fallback token stream of the reference.</p>
       <p>If the referenced token stream contained the '<code>value</code>'
         token, the previous declaration is equivalent to: </p>
       <pre>p { property: value; }<br></pre>
@@ -615,23 +615,23 @@ h1 {
       provided, then the value of the second argument is substituted instead.
       Otherwise, the ‘<code class="css">$()</code>’ represents an <a href="#invalid-token-stream"><i>invalid
           token stream</i></a>.</p>
-    <h3 id="inherit-ref"><span class="secno">3.4. </span> Parent's Property
-      References - the ‘<code class="css">$inherit()</code>’ notation</h3>
+    <h3 id="parent-ref"><span class="secno">3.4. </span> Parent's Property
+      References - the ‘<code class="css">$parent()</code>’ notation</h3>
     <p> Several advanced use-cases for custom properties need the ability to
       reference the value that a property has on the parent element, rather than
-      on the element itself. This can be accomplished with the ‘<code class="css">$inherit()</code>’
+      on the element itself. This can be accomplished with the ‘<code class="css">$parent()</code>’
       notation: </p>
-    <pre><dfn id="inherit-ref-type">&lt;inherit-ref&gt;</dfn> = $inherit( <var>IDENT</var> [, <a
+    <pre><dfn id="parent-ref-type">&lt;parent-ref&gt;</dfn> = $parent( <var>IDENT</var> [, <a
 href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
     <p> If the element has a parent, and the custom property named by the first
       argument is valid on the parent, the property's value on the parent is
       substituted as normal. Otherwise, if a second argument was provided, the
       value of the second argument is substituted instead. Otherwise, the ‘<code
-        class="css">$inherit()</code>’ represents an <a href="#invalid-token-stream"><i>invalid
+        class="css">$parent()</code>’ represents an <a href="#invalid-token-stream"><i>invalid
           token stream</i></a>. </p>
     <div class="example">
       <p> <img style="float: right; border-radius: 3px;" alt="Nested comments feature another color"
-          src="./comments-toggle.png">For example, ‘<code class="css">$inherit()</code>’
+          src="./comments-toggle.png">For example, ‘<code class="css">$parent()</code>’
         can be used to implement a behavior that's very similar to the ‘<code class="css">toggle()</code>’
         notation from [[CSS3VALUES]]. </p>
       <p>In this example, each nested comment alternates between a white and
@@ -656,8 +656,8 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
 &lt;/div&gt;
 &lt;style&gt;
 .comment {
-	my-bg:  $inherit(my-bg2, white);
-	my-bg2: $inherit(my-bg, silver);
+	my-bg:  $parent(my-bg2, white);
+	my-bg2: $parent(my-bg, silver);
 	background: url(comment.png) $(my-bg);
 }
 &lt;/style&gt;</pre>
@@ -721,18 +721,18 @@ p { background-color: $(my-bad-color); }</pre>
       properties, and can be read or modified using all of the existing CSSOM
       APIs for reading or modifying properties. </p>
     <p> The specification extends the IDL definitions in the CSSOM spec to
-      represent the use of the ‘<code class="css">$()</code>’ and '<span class="css">$inherit()</span>'
+      represent the use of the ‘<code class="css">$()</code>’ and '<span class="css">$parent()</span>'
       functions. </p>
-    <h3 id="csspropertyreference-interface"><span class="secno">4.1. </span>
-      Interface CSSPropertyReference</h3>
-    <p> The CSSPropertyReference interface represents an use of property token
-      stream. </p>
+    <h3 id="csstokenstreamreference-interface"><span class="secno">4.1. </span>
+      Interface CSSTokenStreamReference</h3>
+    <p> The CSSTokenStreamReference interface represents an use of property
+      token stream. </p>
     <dl>
       <dt>IDL Definition </dt>
       <dd>
-        <pre class="idl">[[NoInterfaceObject] interface CSSPropertyReference {
-           attribute DOMString providerName;
-           attribute DOMString propertyName; 
+        <pre class="idl">[NoInterfaceObject] interface CSSTokenStreamReference {
+           attribute DOMString attachment;
+           attribute DOMString streamName; 
            attribute any       fallbackValue;
   readonly attribute any       providedValue;
 }</pre>
@@ -740,12 +740,11 @@ p { background-color: $(my-bad-color); }</pre>
       <dt>Attributes </dt>
       <dd>
         <dl>
-          <dt><code>providerName</code> of type <code>DOMString</code> </dt>
-          <dd>This attribute represents the name of the provider used to <a href="referencing-properties">reference</a>
-            the <a href="token-stream">token stream</a>. Changing this
-            attribute changes the attachment of the referenced token stream. <span>Valid
-              values includes <a href="#get-ref">''</a> and <a href="#inherit-ref">'inherit'</a>.</span></dd>
-          <dt> <code>propertyName</code> of type <code>DOMString</code> </dt>
+          <dt><code>attachment</code> of type <code>DOMString</code> </dt>
+          <dd>This attribute represents the name of the attachment of the
+            referenced token stream. <span>Valid values includes <a href="#get-ref">''</a>
+              and <a href="#parent-ref">'parent'</a>.</span></dd>
+          <dt> <code>streamName</code> of type <code>DOMString</code> </dt>
           <dd>This attribute represents the first argument to the function.
             Changing this attribute changes the <a href="#custom-property"><i>custom
                 property</i></a> being referred to. </dd>
@@ -756,11 +755,10 @@ p { background-color: $(my-bad-color); }</pre>
             the referenced <a href="#token-stream">token stream</a> is invalid.
           </dd>
           <dt><code>providedValue</code> of type <code>any</code>, readonly </dt>
-          <dd>This attribute represents the value provided by the token stream
-            provider defined by the <code>providerName</code> property. If the
-            <code>providerName</code> doesn't map to any defined provider or if
-            the provider can't return a value given the propertyName arguments
-            it received, the value of this attribute is guaranteed to be <code>null</code>.</dd>
+          <dd>This attribute represents the value provided by the referenced
+            token stream. If the <code>attachment</code> doesn't map to any
+            defined attachment or if no valid token stream matches <code>streamName</code>,
+            the value of this attribute is guaranteed to be <code>null</code>.</dd>
         </dl>
       </dd>
     </dl>
