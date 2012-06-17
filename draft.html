@@ -47,29 +47,23 @@
         <dd class="vcard"><span class="fn">Luke Macpherson</span>, <span class="org">Google,
             Inc.</span>, <span class="email">macpherson@google.com</span> </dd>
         <dd class="vcard"> <a class="url" href="http://xanthir.com/contact/"> <span
-
               class="fn">Tab Atkins Jr.</span>, </a> <span class="org">Google,
             Inc.</span> </dd>
         <dd class="vcard"> <span class="fn">Daniel Glazman</span>, <span class="org">Disruptive
             Innovations</span>, <span class="email">daniel.glazman@disruptive-innovations.com</span>
         </dd>
         <dt>Proposal editors: </dt>
-        <dd class="vcard">François REMY, Université Libre de Bruxelles</dd>
+        <dd class="vcard"><span class="fn">François REMY</span>, Université Libre de Bruxelles</dd>
         <dd class="vcard"> Brian Kardell, Web developer.<br>
         </dd>
       </dl>
       <!--begin-copyright-->
       <p class="hidden"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-
           rel="license">Copyright</a> © 2012 <a href="http://www.w3.org/"><abbr
-
             title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr
-
             title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr
-
             title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
         <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
-
           href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
         <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
         and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document
@@ -200,12 +194,10 @@
       Until now, however, the link between them has never materialized in expressive terms. 
       One of the goals of this module is to make factual this link by introducing the
       concept of reference in CSS.</p>
-    <p> </p>
     <p>To accomplish those goals, this module introduces a new family of
       properties known collectively as <a href="#custom-property"><i>custom
           properties</i></a>, which allow an author to assign arbitrary values
       to a property with an author-chosen name. This module also introduces <a
-
         href="#token-stream-reference"><i>property references</i></a>, a
       mechanism which allows an author to reuse the value of those properties
       into other CSS properties.&nbsp;</p>
@@ -214,41 +206,32 @@
       and editing such files much easier and less error-prone, as one only has
       to change the value once, at the property declaration site, and the change
       will propagate to anywhere that property is referenced automatically. </p>
-    <p> </p>
     <p>This design also brings a new tool for Web authors to shim unimplemented
       CSS properties in a forward compatible manner by guaranteeing that new
       native implementations will never overlap with their own implementation. </p>
-    <p> </p>
-    <p> </p>
     <div class="example">
       <p>The example below demonstrates how custom properties and property references
         allow the author to adapt the design of websites easily. Imagine a common use in which a 
         website has a variant color scheme depending on the section, but share all share a common layout (illustrated the following picture):</p>
       <p align="center"><img alt="[RED WEBSITE]" src="./site-color-scheme-red.jpg">
         &nbsp;&nbsp; <img alt="[GREEN WEBSITE]" src="./site-color-scheme-green.jpg">
-        &nbsp;&nbsp; <img alt="[BLUE WEBSITE]" src="./site-color-scheme-blue.jpg"><br>
-      </p>
-      <p>Custom properties and references allow the author to express these relationships variablly and thus efficiently manage the CSS:<br>
-      </p>
+        &nbsp;&nbsp; <img alt="[BLUE WEBSITE]" src="./site-color-scheme-blue.jpg"></p>
+      <p>Custom properties and references allow the author to express these relationships variablly and thus efficiently manage the CSS:</p>
       <pre><strong>/* red color scheme (default) */</strong><br>@document url-prefix("http://example.com/") {<br>   html {<br>     &nbsp;my-dark-color: #770000;<br>     &nbsp;my-light-color: #ffdddd;<br>     &nbsp;my-color: #eebbbb;<br>  &nbsp;}<br>}<br><br><strong>/* green color scheme */</strong><br>@document url-prefix("http://example.com/green-section") {<br>   html {<br>     &nbsp;my-dark-color: #007700;<br>     &nbsp;my-light-color: #ddffdd;<br>     &nbsp;my-color: #bbeebb;<br>  &nbsp;}<br>}<br><br><strong>/* blue color scheme */</strong><br>@document url-prefix("http://example.com/blue-section") {<br>   html { <br>      my-dark-color: #000077; <br>      my-light-color: #ddddff; <br>      my-color: #bbbbee;<br>   }<br>}<br><br><strong>/* website styling */</strong><br>header         { background-color: $(my-dark-color);  }<br>nav            { background-color: $(my-light-color); }<br>nav .selected  { background-color: $(my-color);       }<br>h1             { color: $(my-dark-color);             }<br>…<br></pre>
     </div>
-    <p></p>
     <p>Additionally, this module aims to provide a way for authors to share
       custom styling information to their HTML components and in the shadow tree
       of elements in a way that does not interfere with browser-provided
       properties.</p>
     <div class="example">
       <p> The example below illustrates how an author can use custom properties and
-        property references to shim properties on their own HTML components: <br>
-      </p>
+        property references to shim properties on their own HTML components:</p>
       <pre>&lt;style&gt;<br>   .no-toolbar { my-toolbar-display: none }<br>&lt;/style&gt;<br><br>&lt;my-property-editor <br>   data-for="document.body"<br>   class="no-toolbar" <br>/&gt;<br></pre>
       <p>In the shadow tree style of the <code>&lt;my-property-editor&gt;</code>
-        element, the following CSS could be used:<br>
-      </p>
+        element, the following CSS could be used:</p>
       <pre>#toolbar { display: $(my-toolbar-display); }</pre>
       <p> This works because custom properties are inherited across the
-        shadow tree boundaries.<br>
-      </p>
+        shadow tree boundaries.</p>
     </div>
     <h3 id="placement"><span class="secno">1.1. </span> Module Interactions</h3>
     <p> This module defines a new type of primitive value, the <a href="#token-stream-reference"><i>token
@@ -268,7 +251,6 @@
     <p>A <strong>token stream</strong> is a dynamic list of CSS tokens, as
       defined in the <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
         Chapter 4</a> specification or in the CSS Syntax specification <a href="#CSS3-SYNTAX"
-
         rel="biblioentry">[CSS3-SYNTAX]<!--{{!CSS3-SYNTAX}}--></a> when it will
       reach the W3C Recommendation status. To be valid, a token stream must
       conform to the <a href="#value-type">&lt;value&gt;</a> type (a token
@@ -289,17 +271,13 @@
     <p>A <strong>token stream reference</strong> is a set of CSS tokens used in
       a property declaration to reference a <a href="#token-stream">token
         stream</a> and, optionally, an second token stream called the <b>fallback
-        value</b>. <br>
-    </p>
+        value</b>.</p>
     <p>At computed-value time, token stream references are substituted for the
       tokens contained in their referenced token stream or, if it is invalid,
       for the tokens of their fallback value.&nbsp;</p>
-    <p> </p>
-    <p> </p>
     <div class="example">
       <p> In this example, the syntax of an hypothetical token stream reference
-        is explained.<br>
-      </p>
+        is explained.</p>
       <pre>p { property: $attachment(token-stream-name, fallback value); }</pre>
       <p>The '<code class="css">$</code>' token indicates the start of a token
         stream reference (see <a href="#dollar-prefix">The
@@ -311,18 +289,15 @@
         The '<code class="css">fallback value</code>' tokens represent the
         fallback token stream of the reference.</p>
       <p>If the referenced token stream contained the '<code>value</code>'
-        token, the previous declaration is equivalent to:<br>
-      </p>
+        token, the previous declaration is equivalent to:</p>
       <pre>p { property: value; }<br></pre>
       <p>If the referenced token stream is invalid, the previous declaration is
         equivalent to:</p>
       <pre>p { property: fallback value; }</pre>
     </div>
-    <p></p>
     <p>If a declaration, once all token stream references are substituted in, is
       invalid, then the declaration is <a href="#invalid-at-computed-value-time"><i>invalid
           at computed-value time</i></a>.&nbsp;</p>
-    <p> </p>
     <div class="example">
       <p> For example, the following usage of a <a href="#property-reference">property
           reference</a> is fine from a syntax standpoint, but results in
@@ -332,10 +307,8 @@ p { background-color: $(my-length); }</pre>
       <p> Since ‘<code class="css">20px</code>’ is an invalid value for ‘<code class="property">background-color</code>’,
         this instance of the property computes to ‘<code class="property">transparent</code>’
         (the initial value for ‘<code class="property">background-color</code>’)
-        instead. <br>
-      </p>
+        instead. </p>
     </div>
-    <p></p>
     <p>As noted before, in addition to a reference to a token stream, token
       stream references can also contains a fallback value that can be used if
       the referenced token stream is found to be not appropriate for the purpose
@@ -352,9 +325,10 @@ p { background-color: $(my-length); }</pre>
       more token stream references must either: a) contain at least one reference
       which provides no fallback value -OR- b) must be valid when all property
       references are replaced by their fallback value.</p>
-    <div class="example">Given the following CSS file, a conforming user agent
-      should display each matching DIV element with a white text over a green
-      background.<br>
+    <div class="example">
+	  <p>Given the following CSS file, a conforming user agent
+        should display each matching DIV element with a white text over a green
+        background.</p>
       <pre>div {<br>   my-primary-color: green;<br>   my-secondary-color: white;<br>   my-tertiary-color: red;<br>   my-quaternary-color: yellow;<br>   <br>   color: $(my-secondary-color);                       // valid<br>   color: $(my-tertiary-color, 10px);                  // invalid<br>   <br>   background-color: yellow;                 // valid<br>   background-color: $(my-primary-color, blue);        // valid<br>}</pre>
     </div>
     <div class="note">
@@ -365,14 +339,14 @@ p { background-color: $(my-length); }</pre>
         property will probably be discarded by the user agent because it doesn't
         understand the '<span class="css">unsupported-feature()</span>'
         function. In this case, the background will use the '<span class="css">my-bg-color</span>'
-        custom property value.<br>
+        custom property value.
       </p>
       <pre></pre>
     </div>
     <p class="needWork">THE PREVIOUS FEATURE IS AT RISK<br>
     </p>
     <p>A token stream reference can be used in place of any component value, in
-      any property declaration. <br>
+      any property declaration. 
     </p>
     <p class="note">This specification doesn't define a way to use token stream
       references anywhere else. An UA conforming to this specification should
@@ -381,16 +355,15 @@ p { background-color: $(my-length); }</pre>
       invalid value or a valid value that nonetheless has no relation to the
       property of that name. </p>
     <p>The exact syntax of some token stream references is defined in the <a href="#referencing-token-streams">Chapter
-        3</a> of this specification.<br>
-      <span class="secno"></span></p>
+        3</a> of this specification.</p>
     <h3 id="custom-property"><span class="secno">2.3. </span> Custom property</h3>
     <p> This specification defines an open-ended set of properties called <a href="#custom-property"><i>custom
           properties</i></a>, which can be used as <a href="#token-stream-reference"><i>token
           streams</i></a>. Custom properties are author-defined properties which do not have any direct impact on the document rendering or behavior but
-      can be used indirectly (by reference) as values to other CSS properties.<br>
+      can be used indirectly (by reference) as values to other CSS properties.
     </p>
     <p class="note">Future revisions of this specification, may or may not allow any
-      CSS property to be used as a token stream. <br>
+      CSS property to be used as a token stream. 
     </p>
     <table class="propdef">
       <tbody>
@@ -434,13 +407,13 @@ p { background-color: $(my-length); }</pre>
       property is allowed. Additionally, it allows things that are not yet
       valid CSS values, like unknown keywords or functions, blocks, at-rules, and other
       kinds of custom micro-syntaxes (for example, what is allowed in calc()). However, as
-      the production has to be valid CSS, some restrictions apply. <br>
+      the production has to be valid CSS, some restrictions apply. 
     </p>
     <p class="note">For example, unbalanced parentheses are always invalid. </p>
     <p> The term <dfn id="custom-property" title="custom property|custom properties">custom
         property</dfn> refers to any property whose name is composed of a "my-"
       prefix followed by something matching the IDENT production in <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
-        Chapter 4</a>. <br>
+        Chapter 4</a>. 
     </p>
     <p> The initial value of a <a href="#custom-property"><i>custom property</i></a>
       is an empty invalid value. This means that, until a <a href="#custom-property"><i>custom
@@ -475,11 +448,11 @@ p { background-color: $(my-length); }</pre>
         clearer, and if ‘<code class="css">$(my-header-color)</code>’ is used on
         other elements in the document, all of the uses can be updated at once
         by changing the ‘<code class="property">my-header-color</code>’ property
-        on the root element (since all are descendants of :root). <br>
+        on the root element (since all are descendants of :root).
       </p>
       <p>This change can happen after the document is already loaded, for
         example in reaction to a media query change, as the user selects an
-        alternate style sheet or as a result of an action performed in script.<br>
+        alternate style sheet or as a result of an action performed in script.
       </p>
     </div>
     <p> Custom properties are ordinary properties, so they can be declared on
@@ -562,7 +535,7 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
         property defined on &lt;one&gt;, defining ‘<code class="property">my-foo</code>’
         using ‘<code class="css">$(my-bar)</code>’ is not cyclic, and actually
         defines a value that will eventually (when referenced as a token stream
-        in a normal property) resolve to ‘<code class="css">30px</code>’. <br>
+        in a normal property) resolve to ‘<code class="css">30px</code>’. 
       </p>
     </div>
     <p>...</p>
@@ -574,7 +547,7 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
     <p>When used as or in a value production, the dollar glyph indicates that what follows is some form of token stream reference.</p>
     <div class="example">
       <p> In this informative example, the syntax of an hypothetical token
-        stream reference is explained.<br>
+        stream reference is explained.
       </p>
       <pre>p { property: $attachment(token-stream-name, fallback value); }</pre>
       <p>The '<code class="css">$</code>' token indicates the start of a token
@@ -586,15 +559,13 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
         The (optional) '<code class="css">fallback value</code>' tokens represent the
         fallback token stream of the reference.</p>
       <p>If the referenced token stream contained the '<code>value</code>'
-        token, the previous declaration is equivalent to:<br>
+        token, the previous declaration is equivalent to:
       </p>
       <pre>p { property: value; }<br></pre>
       <p>If the referenced token stream is invalid, the previous declaration is
         equivalent to:</p>
       <pre>p { property: fallback value; }</pre>
-      <p></p>
     </div>
-    <p></p>
     <div class="note">
       <p>In future iterations of this spec, we may want to provide more complex
         features for the $ prefix, like conditional token stream references or
@@ -612,9 +583,8 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
     <p> A <strong>property reference</strong> is a token stream reference that
       allows the value of a <a href="#custom-property"><i>custom
           property</i></a> defined on an element to be substituted into another
-      property which has access to it. <br>
+      property which has access to it.
     </p>
-    <p></p>
     <h3 id="get-ref"><span class="secno">3.3. </span>Property References - the
       ‘<code class="css">$()</code>’ notation</h3>
     <p> Formally, the syntax of a property reference is: </p>
@@ -623,7 +593,7 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
     <p> ...where <var>IDENT</var> is anything matching the IDENT production in
       <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
         Chapter 4</a> and corresponds to the name of the referenced <a href="#custom-property">custom
-        property</a>.<br>
+        property</a>.
     </p>
     <div class="example">
       <p> For example, the following code defines and uses a custom property
@@ -647,7 +617,7 @@ h1 {
       override the properties it cares about, rather than being forced to
       provide values for all of them. </p>
     <p> The fallback value of the ‘<code class="css">$()</code>’ notation is its
-      second argument. <br>
+      second argument. 
     </p>
     <p> If the custom property named by the first argument is inherited or
       declared on the element it applies on, its token stream's value is
@@ -676,7 +646,7 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
 
           src="./comments-toggle.png">For example, ‘<code class="css">$inherit()</code>’
         can be used to implement a behavior that's very similar to the ‘<code class="css">toggle()</code>’
-        notation from [[CSS3VALUES]]. <br>
+        notation from [[CSS3VALUES]].
       </p>
       <p>In this example, each nested comment alternates between a white and
         silver background (as in the picture floating to the right). <br>
@@ -713,7 +683,7 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
         on <code>&lt;div class='main'&gt;</code> so that ‘<code class="css">toggle()</code>’
         can actually see the right value, that will make the ".main" elements
         cover up the ‘<code class="property">background-image</code>’ that
-        ".comment" has on it as well. <br>
+        ".comment" has on it as well.
       </p>
       <p>Because custom properties don't have any effect on rendering until
         they're used, they can pass these values through the document without
@@ -727,7 +697,7 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
     <p> When a <a href="#custom-property"><i>custom property</i></a> has its
       initial value, the <a href="#token-stream-reference"><i>token stream</i></a>
       it defines represents an <dfn id="invalid-token-stream">invalid token
-        stream</dfn>. <br>
+        stream</dfn>.
     </p>
     <p>Using an <a href="#invalid-token-stream"><i>invalid token stream</i></a>
       in a property declaration (including other <a href="#custom-property"><i>custom
@@ -1266,7 +1236,7 @@ p { background-color: $(my-bad-color); }</pre>
       CSS properties in a forward compatible manner by guaranteeing that new
       native implementations will never overlap with their own implementation. </p>
     <div class="example">
-      <p> The example below illustrates how an author can use custom properties and
+      <p>The example below illustrates how an author can use custom properties and
         property references to shim properties on their own HTML components: <br>
       </p>
       <pre>&lt;style&gt;<br>   .no-toolbar { my-toolbar-display: none }<br>&lt;/style&gt;<br><br>&lt;my-property-editor <br>   data-for="document.body"<br>   class="no-toolbar" <br>/&gt;<br></pre>
@@ -1296,7 +1266,7 @@ p { background-color: $(my-bad-color); }</pre>
     <p>A <strong>token stream</strong> is a dynamic list of CSS tokens, as
       defined in the <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
         Chapter 4</a> specification or in the CSS Syntax specification <a href="#CSS3-SYNTAX"
-        rel="biblioentry">[CSS3-SYNTAX]<!--{{!CSS3-SYNTAX}}--></a> when it will
+        rel="biblioentry">[CSS3-SYNTAX]<!--{{CSS3-SYNTAX}}--></a> when it will
       reach the W3C Recommendation status. To be valid, a token stream must
       conform to the <a href="#value-type">&lt;value&gt;</a> type (a token
       stream which doesn't conform is called an <a href="#invalid-token-stream">invalid
