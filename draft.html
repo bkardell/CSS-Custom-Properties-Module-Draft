@@ -235,7 +235,7 @@
     <div class="example">
       <p>The example below, extracted from an hypothetical Christmas animation,
         illustrates how authors can use custom properties to represent
-        meta-information and computes several other properties :</p>
+        meta-information and affect several other properties :</p>
       <pre>.snow<br>{<br>    background:   url(snowflake.svg);
     <br>    width:        calc(5px * $(my-radius));
     height:       calc(5px * $(my-radius));<br>    <br>    animation:<br>                 &nbsp;fallOnTheGround 15s infinite;<br>    animation-duration:<br>                  calc(15s * $(my-weight));<br>    my-horizontal-bouncing:<br>                  calc(5px / $(my-radius) / $(my-radius));<br>}<br><br>.small.snow {   my-radius: 0.9;   }<br>.snow       {   my-radius: 1.0;   }<br>.big.snow   {   my-radius: 1.5;   }<br></pre>
