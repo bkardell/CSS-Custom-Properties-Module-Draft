@@ -121,6 +121,8 @@
               Token stream reference</a></li>
           <li><a href="#custom-property"><span class="secno">2.3. </span>
               Custom property</a></li>
+          <li><a href="#property-reference"><span class="secno">2.4. </span>
+              Property reference</a> </li>
         </ul>
       </li>
       <li><a href="#referencing-token-streams"><span class="secno">3. </span>
@@ -128,14 +130,12 @@
         <ul class="toc">
           <li><a href="#dollar-glyph"><span class="secno">3.1. </span> The $
               Prefix</a> </li>
-          <li><a href="#property-reference"><span class="secno">3.2. </span>
-              Property Reference - definition</a> </li>
-          <li><a href="#get-ref"><span class="secno">3.3. </span>Property
+          <li><a href="#get-ref"><span class="secno">3.2. </span>Property
               References - the ‘<code class="css">$()</code>’ notation</a> </li>
-          <li><a href="#parent-ref"><span class="secno">3.4. </span> Parent's
+          <li><a href="#parent-ref"><span class="secno">3.3. </span> Parent's
               Property References - the ‘<code class="css">$parent()</code>’
               notation</a> </li>
-          <li><a href="#using-invalid-references"><span class="secno">3.5. </span>
+          <li><a href="#using-invalid-references"><span class="secno">3.4. </span>
               Using invalid token streams</a> </li>
         </ul>
       </li>
@@ -233,10 +233,12 @@
         tree boundaries.</p>
     </div>
     <div class="example">
-      <p>The example below, extracted from an hypothetical HTML game,
+      <p>The example below, extracted from an hypothetical Christmas animation,
         illustrates how authors can use custom properties to represent
-        behavioral information :</p>
-      <pre>.rock       {   my-weight: 3kg;  my-air-resistance: 0.15;   }<br>.small.rock {   my-weight: 1kg;  my-air-resistance: 0.025;  }<br>.big.rock   {   my-weight: 6kg;  my-air-resistance: 0.20;   }<br><br>.space .rock {  my-weight: 0kg;  my-air-resistance: 0;      }<br></pre>
+        meta-information and computes several other properties :</p>
+      <pre>.snow<br>{<br>    background:   url(snowflake.svg);
+    <br>    width:        calc(5px * $(my-radius));
+    height:       calc(5px * $(my-radius));<br>    <br>    animation:    fallOnTheGround 15s infinite;<br>    animation-duration:<br>                  calc(15s / $(my-weight));<br>    my-horizontal-bouncing:<br>                  calc(5px * $(my-radius) * $(my-radius));<br>}<br><br>.small.snow {   my-radius: 0.9;   }<br>.snow       {   my-radius: 1.0;   }<br>.big.snow   {   my-radius: 1.5;   }<br></pre>
     </div>
     <h3 id="placement"><span class="secno">1.1. </span> Module Interactions</h3>
     <p>This module defines a new type of primitive value, the <a href="#token-stream-reference"><i>token
@@ -518,7 +520,27 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
         defines a value that will eventually (when referenced as a token stream
         in a normal property) resolve to ‘<code class="css">30px</code>’. </p>
     </div>
-    <p>...</p>
+    <h3 id="property-reference"><span class="secno">2.4. </span> Property
+      reference<br>
+    </h3>
+    <p>A <strong>property reference</strong> is a token stream reference that
+      allows the value of a <a href="#custom-property"><i>custom property</i></a>
+      defined on an element to be substituted into another property which has
+      access to it.</p>
+    <p>The attachment of a property reference is the element or the
+      pseudo-element on which the property is applied. If a single declaration
+      applies on more than one element, it has more than one possible property
+      references.</p>
+    <p>The <a href="#provided-value">provided value</a> of a property reference
+      referencing a CSS property is either the specified value of the property
+      (after the substitution of any valid token stream reference it contained)
+      if is is declared on the element, or its inherited or initial value
+      otherwise, depending of whether that property was inherited or not. </p>
+    <p>If such property doesn't exist or is invalid, and a second argument was
+      provided, then the fallback value of the reference is used instead.
+      Otherwise, the reference represents an <a href="#invalid-token-stream"><i>invalid
+          token stream</i></a>.</p>
+    <p></p>
     <!-- USING -->
     <h2 id="referencing-token-streams"><span class="secno">3. </span>
       Referencing token streams</h2>
@@ -576,26 +598,7 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
         references in the future.<br>
       </p>
     </div>
-    <h3 id="property-reference"><span class="secno">3.2. </span> Property
-      References - definition</h3>
-    <p>A <strong>property reference</strong> is a token stream reference that
-      allows the value of a <a href="#custom-property"><i>custom property</i></a>
-      defined on an element to be substituted into another property which has
-      access to it.</p>
-    <p>The attachment of a property reference is the element or the
-      pseudo-element on which the property is applied. If a single declaration
-      applies on more than one element, it has more than one possible property
-      references.</p>
-    <p>The <a href="#provided-value">provided value</a> of a property reference
-      referencing a CSS property is either the specified value of the property
-      (after the substitution of any valid token stream reference it contained)
-      if is is declared on the element, or its inherited or initial value
-      otherwise, depending of whether that property was inherited or not. </p>
-    <p>If such property doesn't exist or is invalid, and a second argument was
-      provided, then the fallback value of the reference is used instead.
-      Otherwise, the reference represents an <a href="#invalid-token-stream"><i>invalid
-          token stream</i></a>.</p>
-    <h3 id="get-ref"><span class="secno">3.3. </span>Property References - the
+    <h3 id="get-ref"><span class="secno">3.2. </span>Property References - the
       ‘<code class="css">$()</code>’ notation</h3>
     <p>The <dfn id="default-attachment">default attachment</dfn> of a token
       stream reference is the element on which the property is applied.</p>
@@ -625,7 +628,7 @@ h1 {
       provide values for all of them. </p>
     <p>The fallback value of the ‘<code class="css">$()</code>’ notation is its
       second argument.</p>
-    <h3 id="parent-ref"><span class="secno">3.4. </span> Parent's Property
+    <h3 id="parent-ref"><span class="secno">3.3. </span> Parent's Property
       References - the ‘<code class="css">$parent()</code>’ notation</h3>
     <p>Several advanced use-cases for custom properties need the ability to
       reference the value that a property has on the parent element, rather than
@@ -683,7 +686,7 @@ h1 {
         as it would immediately produce a cycle between '<code class="css">my-bg</code>'
         and '<code class="css">my-bg2</code>', making them both invalid. </p>
     </div>
-    <h3 id="using-invalid-references"><span class="secno">3.5. </span> Using
+    <h3 id="using-invalid-references"><span class="secno">3.4. </span> Using
       invalid token streams</h3>
     <p> When a <a href="#custom-property"><i>custom property</i></a> has its
       initial value, the <a href="#token-stream-reference"><i>token stream</i></a>
