@@ -238,7 +238,7 @@
         meta-information and computes several other properties :</p>
       <pre>.snow<br>{<br>    background:   url(snowflake.svg);
     <br>    width:        calc(5px * $(my-radius));
-    height:       calc(5px * $(my-radius));<br>    <br>    animation:    fallOnTheGround 15s infinite;<br>    animation-duration:<br>                  calc(15s / $(my-weight));<br>    my-horizontal-bouncing:<br>                  calc(5px * $(my-radius) * $(my-radius));<br>}<br><br>.small.snow {   my-radius: 0.9;   }<br>.snow       {   my-radius: 1.0;   }<br>.big.snow   {   my-radius: 1.5;   }<br></pre>
+    height:       calc(5px * $(my-radius));<br>    <br>    animation:<br>                 &nbsp;fallOnTheGround 15s infinite;<br>    animation-duration:<br>                  calc(15s * $(my-weight));<br>    my-horizontal-bouncing:<br>                  calc(5px / $(my-radius) / $(my-radius));<br>}<br><br>.small.snow {   my-radius: 0.9;   }<br>.snow       {   my-radius: 1.0;   }<br>.big.snow   {   my-radius: 1.5;   }<br></pre>
     </div>
     <h3 id="placement"><span class="secno">1.1. </span> Module Interactions</h3>
     <p>This module defines a new type of primitive value, the <a href="#token-stream-reference"><i>token
