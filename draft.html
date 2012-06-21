@@ -43,8 +43,7 @@
         <dt>W3C editors: </dt>
         <dd class="vcard"><span class="fn">Luke Macpherson</span>, <span class="org">Google,
             Inc.</span>, <span class="email">macpherson@google.com</span> </dd>
-        <dd class="vcard"> <a class="url" href="http://xanthir.com/contact/"> <span
-
+        <dd class="vcard"> <a class="url" href="http://xanthir.com/contact/"> <span
               class="fn">Tab Atkins Jr.</span>, </a> <span class="org">Google,
             Inc.</span> </dd>
         <dd class="vcard"> <span class="fn">Daniel Glazman</span>, <span class="org">Disruptive
@@ -53,21 +52,17 @@
         <dt>Proposal editors: </dt>
         <dd class="vcard"><span class="fn">François REMY</span>, Université
           Libre de Bruxelles</dd>
-        <dd class="vcard"><span class="fn">Brian Kardell</span>, Apollo Group, Inc.<br>
+        <dd class="vcard"><span class="fn">Brian Kardell</span>, Apollo Group,
+          Inc.<br>
         </dd>
       </dl>
       <!--begin-copyright-->
-      <p class="hidden"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-
-          rel="license">Copyright</a> © 2012 <a href="http://www.w3.org/"><abbr
-
-            title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr
-
-            title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr
-
+      <p class="hidden"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
+          rel="license">Copyright</a> © 2012 <a href="http://www.w3.org/"><abbr
+            title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr
+            title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr
             title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
-        <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
-
+        <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
           href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
         <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
         and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document
@@ -199,8 +194,7 @@
     <p>To accomplish those goals, this module introduces a new family of
       properties known collectively as <a href="#custom-property"><i>custom
           properties</i></a>, which allow an author to assign arbitrary values
-      to a property with an author-chosen name. This module also introduces <a
-
+      to a property with an author-chosen name. This module also introduces <a
         href="#token-stream-reference"><i>property references</i></a>, a
       mechanism which allows an author to reuse the value of those properties
       into other CSS properties.&nbsp;</p>
@@ -210,11 +204,11 @@
       to change the value once, at the property declaration site, and the change
       will automatically propagate to anywhere that property is referenced. </p>
     <div class="example">
-      <p>The example below demonstrates how custom properties and property
-        references allow the author to adapt the design of websites easily.
-        Imagine the common case in which a website has a variant color scheme
-        depending on the section, but otherwise share a common layout (as
-        illustrated by the following pictures):</p>
+      <p><a id="sample-global">The example below</a> demonstrates how custom
+        properties and property references allow the author to adapt the design
+        of websites easily. Imagine the common case in which a website has a
+        variant color scheme depending on the section, but otherwise share a
+        common layout (as illustrated by the following pictures):</p>
       <p align="center"><img alt="[RED WEBSITE]" src="./site-color-scheme-red.jpg">
         &nbsp;&nbsp; <img alt="[GREEN WEBSITE]" src="./site-color-scheme-green.jpg">
         &nbsp;&nbsp; <img alt="[BLUE WEBSITE]" src="./site-color-scheme-blue.jpg"></p>
@@ -230,8 +224,9 @@
       CSS properties in a forward compatible manner by guaranteeing that new
       native implementations will never overlap with their own implementation. </p>
     <div class="example">
-      <p>The example below illustrates how authors can use custom properties and
-        property references to shim properties on their own HTML components:</p>
+      <p><a id="sample-local">The example below</a> illustrates how authors can
+        use custom properties and property references to shim properties on
+        their own HTML components:</p>
       <pre>&lt;style&gt;<br>   .no-toolbar { my-toolbar-display: none }<br>&lt;/style&gt;<br><br>&lt;my-property-editor <br>   data-for="document.body"<br>   class="no-toolbar" <br>/&gt;<br></pre>
       <p>In the shadow tree style of the <code>&lt;my-property-editor&gt;</code>
         element, the following CSS could be used:</p>
@@ -264,15 +259,12 @@
     <h3 id="token-stream"><span class="secno">2.1. </span> Token stream</h3>
     <p>A <dfn>token stream</dfn> is a dynamic list of CSS tokens, as defined in
       the <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
-        Chapter 4</a> specification or in the CSS Syntax specification <a href="#CSS3-SYNTAX"
-
+        Chapter 4</a> specification or in the CSS Syntax specification <a href="#CSS3-SYNTAX"
         rel="biblioentry">[CSS3-SYNTAX]<!--{{!CSS3-SYNTAX}}--></a> when it will
       reach the W3C Recommendation status. To be valid, a token stream must
       conform to the <a href="#value-type">&lt;value&gt;</a> type (a token
       stream which doesn't conform is called an <a href="#invalid-token-stream">invalid
         token stream</a>).&nbsp;</p>
-    <p>The <dfn id="attachment">attachment</dfn> of a token stream is defined
-      as the object from where it can be referenced.</p>
     <p>The <dfn id="stream-name">name</dfn> of a token stream is defined as a
       valid CSS identifier which can be used to reference the token stream from
       its attachment.</p>
@@ -281,15 +273,11 @@
         empty token stream represents an <a href="#invalid-token-stream">invalid
           token stream</a>.</p>
     </div>
-    <div class="note">
-      <p>A token stream is generally best described by its list of tokens, its
-        attachment (the object it belongs to) and its scope (the locations where
-        it can be <a href="#token-stream-reference">referenced</a>).</p>
-    </div>
     <h3 id="token-stream-reference"><span class="secno">2.2. </span> Token
       stream reference</h3>
     <p>A <dfn>token stream reference</dfn> is a set of CSS tokens used in a
-      property declaration to reference a <a href="#token-stream">token stream</a>
+      property declaration to reference, by the mean of a <dfn>provider</dfn>
+      and an unique <dfn>name</dfn>, a <a href="#token-stream">token stream</a>
       called the <dfn id="provided-value">provided value</dfn> and, optionally,
       provides a second token stream called the <dfn id="fallback-value">fallback
         value</dfn>.</p>
@@ -393,8 +381,7 @@ p { background-color: $(my-length); }</pre>
       </tbody>
     </table>
     <p>The <dfn id="value-type"><var>&lt;value&gt;</var></dfn> type used in the
-      syntax above is defined as anything matching the "value" production in <a
-
+      syntax above is defined as anything matching the "value" production in <a
         href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS 2.1
         Chapter 4.1</a> <a href="#CSS21" rel="biblioentry">[CSS21]<!--{{!CSS21}}--></a>.
       This puts only a few restrictions on what kinds of values you can store in
@@ -536,15 +523,11 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
       allows the value of a <a href="#custom-property"><i>custom property</i></a>
       defined on an element to be substituted into another property which has
       access to it.</p>
-    <p>The attachment of a property reference is the element or the
-      pseudo-element on which the property is applied. If a single declaration
-      applies on more than one element, it has more than one possible property
-      references.</p>
-    <p>The <a href="#provided-value">provided value</a> of a property reference
-      referencing a CSS property is either the specified value of the property
-      (after the substitution of any valid token stream reference it contained)
-      if is is declared on the element, or its inherited or initial value
-      otherwise, depending of whether that property was inherited or not. </p>
+    <p>The <a href="#provided-value">provided value</a> of a CSS property is
+      either the specified value of the property (after the substitution of any
+      valid token stream reference it contained) if is is declared on the
+      element, or its inherited/initial value otherwise, depending of whether
+      that property was inherited or not. </p>
     <p>If such property doesn't exist or is invalid, and a second argument was
       provided, then the fallback value of the reference is used instead.
       Otherwise, the reference represents an <a href="#invalid-token-stream"><i>invalid
@@ -557,18 +540,17 @@ three { my-foo: calc($(my-bar) + 10px); }</pre>
     <p>When used as or in a value production, the dollar glyph indicates that
       what follows is some form of token stream reference. Formally, the syntax
       of a <a href="#token-stream-reference">token stream reference</a> is: </p>
-    <pre><dfn id="ref-type">&lt;ref&gt;</dfn> = "$" [<var>attachment</var>]? ( <var>stream-name</var> [, <a
-
+    <pre><dfn id="ref-type">&lt;ref&gt;</dfn> = "$" [<var>provider</var>]? ( <var>stream-name</var> [, <a
 href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
-    <p> ...where <var>attachment</var> and <var>stream-name</var> are anything
+    <p> ...where <var>provider</var> and <var>stream-name</var> are anything
       matching the IDENT production in <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
-        Chapter 4</a> and respectively corresponds to an <dfn>attachment
-        identifier</dfn> and to the name of the referenced <a href="#token-stream">token
+        Chapter 4</a> and respectively corresponds to an <dfn>reference
+        provider</dfn> and to the name of the referenced <a href="#token-stream">token
         stream</a>. </p>
-    <p>If the <var>attachment</var> token is not present, the token stream
-      reference refers to the <a href="#default-attachment">default attachment</a>.
-      If the <var>attachment</var> token is present but doesn't match any
-      defined attachment identifier, the declaration is invalid.<br>
+    <p>If the <var>provider</var> token is not present, the token stream
+      reference refers to the <a href="#default-attachment">default provider</a>.
+      If the <var>provider</var> token is present but doesn't match any defined
+      reference provider, the declaration is invalid.<br>
     </p>
     <p>The second argument of the reference is its <a href="#fallback-value">fallback
         value</a>.</p>
@@ -578,10 +560,10 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
       <pre>p { property: $foo(bar, fallback value); }</pre>
       <p>The '<code class="css">$</code>' token indicates the start of a token
         stream reference. <br>
-        The '<code class="css">foo</code>' token represents the attachment of
-        the token stream, using an attachment identifier.<br>
+        The '<code class="css">foo</code>' token represents the provider of the
+        reference.<br>
         The '<code class="css">bar</code>' token represents the name of the
-        token stream.<br>
+        referenced token stream.<br>
         The '<code class="css">fallback value</code>' tokens represent the
         fallback token stream of the reference.</p>
       <p>If the referenced token stream contained the '<code>value</code>'
@@ -610,10 +592,10 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? )</pre>
     </div>
     <h3 id="get-ref"><span class="secno">3.2. </span>Property References - the
       ‘<code class="css">$()</code>’ notation</h3>
-    <p>The <dfn id="default-attachment">default attachment</dfn> of a token
+    <p>The <dfn id="default-attachment">default provider</dfn> of a token
       stream reference is the element on which the property is applied.</p>
-    <p>The default attachment identifier allows to reference other properties
-      applying on the same element as the one the property it is declared in.</p>
+    <p>The default provider allows to reference other properties applying on the
+      same element as the one the property it is declared in.</p>
     <p class="note">Properties whose value is inherited are also targetable,
       even if they are not specifically applying on the element.</p>
     <div class="example">
@@ -644,13 +626,12 @@ h1 {
       reference the value that a property has on the parent element, rather than
       on the element itself. This can be accomplished with the ‘<code class="css">$parent()</code>’
       notation: </p>
-    <p>The ‘<code class="css">parent</code>’ <a href="attachment-identifier">attachment
-        identifier</a> allows to reference properties applying on the parent of
-      the element the property it is declared in applies, if such parent exists.
-      If it doesn't, then the referenced token stream is <a href="#invalid-token-stream">invalid</a>.</p>
+    <p>The ‘<code class="css">parent</code>’ <a href="attachment-identifier">provider</a>
+      allows to reference properties applying on the parent of the element the
+      property it is declared in applies, if such parent exists. If it doesn't,
+      then the referenced token stream is <a href="#invalid-token-stream">invalid</a>.</p>
     <div class="example">
-      <p> <img style="float: right; border-radius: 3px;" alt="Nested comments feature another color"
-
+      <p> <img style="float: right; border-radius: 3px;" alt="Nested comments feature another color"
           src="./comments-toggle.png">For example, ‘<code class="css">$parent()</code>’
         can be used to implement a behavior that's very similar to the ‘<code class="css">toggle()</code>’
         notation from [[CSS3VALUES]]. </p>
@@ -709,8 +690,7 @@ h1 {
           at computed-value time</i></a>. </p>
     <p> A declaration can be <dfn id="invalid-at-computed-value-time">invalid
         at computed-value time</dfn> if it uses an invalid <a href="#token-stream-reference"><i>token
-          stream reference</i></a>, as explained above, or if it uses a valid <a
-
+          stream reference</i></a>, as explained above, or if it uses a valid <a
         href="#token-stream"><i>token stream reference</i></a>, but the property
       value, after substituting its <a href="#token-stream-reference"><i>token
           stream references</i></a>, is invalid. When this happens, the computed
@@ -801,8 +781,7 @@ p { background-color: $(my-bad-color); }</pre>
       interpreted as described in RFC 2119. However, for readability, these
       words do not appear in all uppercase letters in this specification. </p>
     <p>All of the text of this specification is normative except sections
-      explicitly marked as non-normative, examples, and notes. <a href="#RFC2119"
-
+      explicitly marked as non-normative, examples, and notes. <a href="#RFC2119"
         rel="biblioentry">[RFC2119]<!--{{!RFC2119}}--></a> </p>
     <p>Examples in this specification are introduced with the words “for
       example” or are set apart from the normative text with <code>class="example"</code>,
