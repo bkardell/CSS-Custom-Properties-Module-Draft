@@ -12,7 +12,8 @@
     i { font-style: normal; }
     
     body {
-      background-image: none;
+		background-image: url('http://www.w3.org/StyleSheets/TR/logo-unofficial.png');
+		max-width: 60em; margin-left: auto; margin-right: auto;
     }
     
     .hidden {
@@ -626,7 +627,7 @@ h1 {
       reference the value that a property has on the parent element, rather than
       on the element itself. This can be accomplished with the ‘<code class="css">$parent()</code>’
       notation: </p>
-    <p>The ‘<code class="css">parent</code>’ <a href="attachment-identifier">provider</a>
+    <p>The ‘<code class="css">parent</code>’ <a href="#attachment-identifier">provider</a>
       allows to reference properties applying on the parent of the element the
       property it is declared in applies, if such parent exists. If it doesn't,
       then the referenced token stream is <a href="#invalid-token-stream">invalid</a>.</p>
