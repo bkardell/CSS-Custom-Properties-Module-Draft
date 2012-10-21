@@ -78,17 +78,6 @@
         spec aims to differentiate itself from macro-like functionality of
         preprocessed variables, it doesn't make sense for it to be called CSS
         Variables. In fact, it doesn't define any variable at all.</p>
-      <p>This specification uses the 'my' prefix for custom properties on
-        purpose for custom properties for three main reasons:</p>
-      <ol>
-        <li>It's the prefix that developers used naturally, when they were using
-          or asking custom properties before the introduction of any particular
-          draft.&nbsp;</li>
-        <li>It does clearly state the status of the property: the property is
-          yours, you can use it for anything you would like to and the browser
-          won't mess up with your code.</li>
-        <li>Meanwhile, it's a very short prefix that's not cumbersome to type.</li>
-      </ol>
       <p>Beside this, this specification also ban the 'var' and 'parent-var'
         functional notations and replace them with the more informative and
         generic 'get()' function.</p>
@@ -205,7 +194,7 @@
       mechanism which allows an author to reuse the value of those properties
       into other CSS properties.&nbsp;</p>
     <p>Thus, what were previously arbitrary-seeming values (like #cfcfff) may
-      now have informative names (like my-primary-color). This makes authoring
+      now have informative names (like x-primary-color). This makes authoring
       and editing such files much easier and less error-prone, as one only has
       to change the value once, at the property declaration site, and the change
       will automatically propagate to anywhere that property is referenced. </p>
@@ -220,7 +209,7 @@
         &nbsp;&nbsp; <img alt="[BLUE WEBSITE]" src="./site-color-scheme-blue.jpg"></p>
       <p>Custom properties and references allow the author to express these
         relationships variably and thus efficiently manage the CSS:</p>
-      <pre><strong>/* red color scheme (default) */</strong><br>@document url-prefix("http://example.com/") {<br>   html {<br>     &nbsp;my-dark-color: #770000;<br>     &nbsp;my-light-color: #ffdddd;<br>     &nbsp;my-color: #eebbbb;<br>  &nbsp;}<br>}<br><br><strong>/* green color scheme */</strong><br>@document url-prefix("http://example.com/green-section") {<br>   html {<br>     &nbsp;my-dark-color: #007700;<br>     &nbsp;my-light-color: #ddffdd;<br>     &nbsp;my-color: #bbeebb;<br>  &nbsp;}<br>}<br><br><strong>/* blue color scheme */</strong><br>@document url-prefix("http://example.com/blue-section") {<br>   html { <br>      my-dark-color: #000077; <br>      my-light-color: #ddddff; <br>      my-color: #bbbbee;<br>   }<br>}<br><br><strong>/* website styling */</strong><br>header         { background-color: get(my-dark-color);  }<br>nav            { background-color: get(my-light-color); }<br>nav .selected  { background-color: get(my-color);       }<br>h1             { color: get(my-dark-color);             }<br>…<br></pre>
+      <pre><strong>/* red color scheme (default) */</strong><br>@document url-prefix("http://example.com/") {<br>   html {<br>     &nbsp;x-dark-color: #770000;<br>     &nbsp;x-light-color: #ffdddd;<br>     &nbsp;x-color: #eebbbb;<br>  &nbsp;}<br>}<br><br><strong>/* green color scheme */</strong><br>@document url-prefix("http://example.com/green-section") {<br>   html {<br>     &nbsp;x-dark-color: #007700;<br>     &nbsp;x-light-color: #ddffdd;<br>     &nbsp;x-color: #bbeebb;<br>  &nbsp;}<br>}<br><br><strong>/* blue color scheme */</strong><br>@document url-prefix("http://example.com/blue-section") {<br>   html { <br>      x-dark-color: #000077; <br>      x-light-color: #ddddff; <br>      x-color: #bbbbee;<br>   }<br>}<br><br><strong>/* website styling */</strong><br>header         { background-color: get(x-dark-color);  }<br>nav            { background-color: get(x-light-color); }<br>nav .selected  { background-color: get(x-color);       }<br>h1             { color: get(x-dark-color);             }<br>…<br></pre>
     </div>
     <p>Additionally, this module aims to provide a way for authors to share
       custom styling information to their HTML components and in the shadow tree
@@ -233,10 +222,10 @@
       <p><a id="sample-local">The example below</a> illustrates how authors can
         use custom properties and property references to shim properties on
         their own HTML components:</p>
-      <pre>&lt;style&gt;<br>   .no-toolbar { my-toolbar-display: none }<br>&lt;/style&gt;<br><br>&lt;my-property-editor <br>   data-for="document.body"<br>   class="no-toolbar" <br>/&gt;<br></pre>
-      <p>In the shadow tree style of the <code>&lt;my-property-editor&gt;</code>
+      <pre>&lt;style&gt;<br>   .no-toolbar { x-toolbar-display: none }<br>&lt;/style&gt;<br><br>&lt;x-property-editor <br>   data-for="document.body"<br>   class="no-toolbar" <br>/&gt;<br></pre>
+      <p>In the shadow tree style of the <code>&lt;x-property-editor&gt;</code>
         element, the following CSS could be used:</p>
-      <pre>#toolbar { display: get(my-toolbar-display); }</pre>
+      <pre>#toolbar { display: get(x-toolbar-display); }</pre>
       <p> This works because custom properties are inherited across the shadow
         tree boundaries.</p>
     </div>
@@ -245,8 +234,8 @@
         illustrates how authors can use custom properties to represent
         meta-information and affect several other properties :</p>
       <pre>.snow<br>{<br>    background:   url(snowflake.svg);
-    <br>    width:        calc(5px * get(my-radius));
-    height:       calc(5px * get(my-radius));<br>    <br>    animation:<br>                 &nbsp;fallOnTheGround 15s infinite;<br>    animation-duration:<br>                  calc(15s * get(my-weight));<br>    my-horizontal-bouncing:<br>                  calc(5px / get(my-radius) / get(my-radius));<br>}<br><br>.small.snow {   my-radius: 0.9;   }<br>.snow       {   my-radius: 1.0;   }<br>.big.snow   {   my-radius: 1.5;   }<br></pre>
+    <br>    width:        calc(5px * get(x-radius));
+    height:       calc(5px * get(x-radius));<br>    <br>    animation:<br>                 &nbsp;fallOnTheGround 15s infinite;<br>    animation-duration:<br>                  calc(15s * get(x-weight));<br>    x-horizontal-bouncing:<br>                  calc(5px / get(x-radius) / get(x-radius));<br>}<br><br>.small.snow {   x-radius: 0.9;   }<br>.snow       {   x-radius: 1.0;   }<br>.big.snow   {   x-radius: 1.5;   }<br></pre>
     </div>
     <h3 id="placement"><span class="secno">1.1. </span> Module Interactions</h3>
     <p>This module defines a new type of primitive value, the <a href="#token-stream-reference"><i>token
@@ -303,8 +292,8 @@
       <p>For example, the following usage of a <a href="#property-reference">property
           reference</a> is fine from a syntax standpoint, but results in
         nonsense when the token stream reference is substituted in: </p>
-      <pre>:root { my-length: 20px; }
-p { background-color: get(my-length); }</pre>
+      <pre>:root { x-length: 20px; }
+p { background-color: get(x-length); }</pre>
       <p>Since ‘<code class="css">20px</code>’ is an invalid value for ‘<code class="property">background-color</code>’,
         this instance of the property computes to ‘<code class="property">transparent</code>’
         (the initial value for ‘<code class="property">background-color</code>’)
@@ -337,16 +326,16 @@ p { background-color: get(my-length); }</pre>
     <div class="example">
       <p>Given the following CSS file, a conforming user agent should display
         each matching DIV element with a <b>white</b> text over a <b>green </b>background.</p>
-      <pre>div {<br>   my-background-color: green;<br>   my-foreground-color: white;<br>   my-secondary-color: red;<br>   <br>   color: get(my-foreground-color);                     // valid<br>   color: get(my-secondary-color || 10px);                // ignored<br>   <br>   background-color: yellow;                            // valid (overridden)<br>   background-color: get(my-background-color || blue);    // valid<br>}</pre>
+      <pre>div {<br>   x-background-color: green;<br>   x-foreground-color: white;<br>   x-secondary-color: red;<br>   <br>   color: get(x-foreground-color);                     // valid<br>   color: get(x-secondary-color || 10px);                // ignored<br>   <br>   background-color: yellow;                            // valid (overridden)<br>   background-color: get(x-background-color || blue);    // valid<br>}</pre>
     </div>
     <div class="note">
       <p>The rationale behind this restriction is to allow proper fallback for
         unsupported features.</p>
-      <pre>.selector {<br>   background: get(my-bg-color);<br>   background: get(my-super-cool-bg || unsupported-feature(...));<br>}<br></pre>
+      <pre>.selector {<br>   background: get(x-bg-color);<br>   background: get(x-super-cool-bg || unsupported-feature(...));<br>}<br></pre>
       <p>The second declaration of the '<span class="css">background</span>'
         property will probably be discarded by the user agent because it doesn't
         understand the '<span class="css">unsupported-feature()</span>'
-        function. In this case, the background will use the '<span class="css">my-bg-color</span>'
+        function. In this case, the background will use the '<span class="css">x-bg-color</span>'
         custom property value. </p>
       <pre></pre>
     </div>
@@ -376,7 +365,7 @@ p { background-color: get(my-length); }</pre>
       <tbody>
         <tr>
           <th>Name: </th>
-          <td><dfn id="my-properties">my-*</dfn> </td>
+          <td><dfn id="my-properties">x-*</dfn> </td>
         </tr>
         <tr>
           <th>Values: </th>
@@ -422,7 +411,7 @@ p { background-color: get(my-length); }</pre>
     <p>Still, as the production has to be valid CSS, some restrictions apply. </p>
     <p class="note">For example, unbalanced parentheses are always invalid. </p>
     <p>The term <dfn id="custom-property" title="custom property|custom properties">custom
-        property</dfn> refers to any property whose name is composed of a "my-"
+        property</dfn> refers to any property whose name is composed of a "x-"
       prefix followed by something matching the IDENT production in <a href="http://www.w3.org/TR/CSS2/syndata.html#tokenization">CSS2.1
         Chapter 4</a>. </p>
     <p>The <b>initial value</b> of a <a href="#custom-property"><i>custom
@@ -440,18 +429,18 @@ p { background-color: get(my-length); }</pre>
     <div class="example">
       <p> This style rule: </p>
       <pre>:root {
-    my-header-color: #06c;
+    x-header-color: #06c;
 }</pre>
       <p>declares a <a href="#custom-property"><i>custom property</i></a> named
-        "my-header-color" on the root element, and assigns to it the value
+        "x-header-color" on the root element, and assigns to it the value
         "#06c". This property is then inherited to the elements in the rest of
         the document. Its value can be referenced via an appropriate: </p>
-      <pre>h1 { color: get(my-header-color); }</pre>
+      <pre>h1 { color: get(x-header-color); }</pre>
       <p>The preceding rule is equivalent to writing ‘<code class="css">color:
           #06c;</code>’, except that the name makes the origin of the color
-        clearer, and if ‘<code class="css">get(my-header-color)</code>’ is used
+        clearer, and if ‘<code class="css">get(x-header-color)</code>’ is used
         on other elements in the document, all of the uses can be updated at
-        once by changing the ‘<code class="property">my-header-color</code>’
+        once by changing the ‘<code class="property">x-header-color</code>’
         property on the root element (since all are descendants of :root). </p>
       <p>This change can happen after the document is already loaded, for
         example in reaction to a media query change, as the user selects an
@@ -467,9 +456,9 @@ p { background-color: get(my-length); }</pre>
         multiple times, the standard cascade rules help resolve it. Property
         references always draw from the computed value of the associated custom
         property on the same element: </p>
-      <pre>:root  { my-color: blue; }
-div    { my-color: green; }
-#alert { my-color: red; }<br>*      { color: get(my-color); }
+      <pre>:root  { x-color: blue; }
+div    { x-color: green; }
+#alert { x-color: red; }<br>*      { color: get(x-color); }
 
 &lt;p&gt;I inherited blue from the root element!&lt;/p&gt;
 &lt;div&gt;I got green set directly on me!&lt;/div&gt;
@@ -490,16 +479,16 @@ div    { my-color: green; }
     <div class="issue"><br>
       If the cyclical relationships define fallback values, shouldn't they be
       used instead of marking the property invalid? <br>
-      <pre>my-a: get(my-b || none); // none<br>my-b: get(my-a || none); // none<br></pre>
+      <pre>x-a: get(x-b || none); // none<br>x-b: get(x-a || none); // none<br></pre>
       If only some values in the cyclical relationships are replaced by their
       fallback value, the ones which didn't provide a fallback value (and would
       be invalid given previous rule) can reference the other's fallback values
       since they're not invalid anymore.<br>
-      <pre>my-a: get(my-b || 0px);      // 0px<br>my-b: get(my-c || 0px);      // 0px<br>my-c: get(my-a) get(my-b); // 0px 0px<br></pre>
+      <pre>x-a: get(x-b || 0px);      // 0px<br>x-b: get(x-c || 0px);      // 0px<br>x-c: get(x-a) get(x-b); // 0px 0px<br></pre>
       If we adopt this, the only case where properties would become invalid
       would be the one where no reference at all in a cycle do provide a
       fallback value.<br>
-      <pre>my-a: get(my-b); // invalid<br>my-b: get(my-a); // invalid<br></pre>
+      <pre>x-a: get(x-b); // invalid<br>x-b: get(x-a); // invalid<br></pre>
     </div>
     <p></p>
     <p>The exact behavior of cyclical references is explained in the "<a href="http://lists.w3.org/Archives/Public/www-style/2012Oct/0599.html">style
@@ -509,22 +498,22 @@ div    { my-color: green; }
       <p>This example shows a custom property safely using a property reference:
       </p>
       <pre>:root {
-    my-main-color: #c06;
-    my-accent-background: linear-gradient(to top, get(my-main-color), white);
+    x-main-color: #c06;
+    x-accent-background: linear-gradient(to top, get(x-main-color), white);
 }</pre>
-      <p>The ‘<code class="property">my-accent-background</code>’ property
-        (along with any other properties that use ‘<code class="css">get(my-main-color)</code>’)
-        will automatically update when the ‘<code class="property">my-main-color</code>’
+      <p>The ‘<code class="property">x-accent-background</code>’ property (along
+        with any other properties that use ‘<code class="css">get(x-main-color)</code>’)
+        will automatically update when the ‘<code class="property">x-main-color</code>’
         property is changed. </p>
     </div>
     <div class="example invalid-example">
       <p>On the other hand, this example shows an invalid instance of custom
         properties depending on each other: </p>
       <pre>:root {
-    my-first-property: calc(get(my-second-property) + 20px);
-    my-second-property: calc(get(my-first-property) - 20px);
+    x-first-property: calc(get(x-second-property) + 20px);
+    x-second-property: calc(get(x-first-property) - 20px);
 }</pre>
-      <p>Both ‘<code class="property">my-one</code>’ and ‘<code class="property">my-two</code>’
+      <p>Both ‘<code class="property">x-one</code>’ and ‘<code class="property">x-two</code>’
         now define <a href="#invalid-token-stream"><i>invalid token streams</i></a>
         rather than lengths. </p>
     </div>
@@ -540,25 +529,25 @@ div    { my-color: green; }
       <p>For example, given the following structure, these custom properties are
         <strong>not</strong> cyclic, and all define valid token streams: </p>
       <pre>&lt;one&gt;&lt;two&gt;&lt;three /&gt;&lt;/two&gt;&lt;/one&gt;
-one   { my-foo: 10px; }
-two   { my-bar: calc(get(my-foo) + 10px); }
-three { my-foo: calc(get(my-bar) + 10px); }</pre>
-      <p>The &lt;one&gt; element defines a value for ‘<code class="property">my-foo</code>’.
+one   { x-foo: 10px; }
+two   { x-bar: calc(get(x-foo) + 10px); }
+three { x-foo: calc(get(x-bar) + 10px); }</pre>
+      <p>The &lt;one&gt; element defines a value for ‘<code class="property">x-foo</code>’.
         <br></p>
       <p>The &lt;two&gt; element inherits this value, and additionally assigns a
-        value to ‘<code class="property">my-bar</code>’ by referencing
-        &lt;one&gt;'s ‘<code class="css">my-foo</code>’ property. <br>
+        value to ‘<code class="property">x-bar</code>’ by referencing
+        &lt;one&gt;'s ‘<code class="css">x-foo</code>’ property. <br>
       </p>
-      <p>Finally, the &lt;three&gt; element inherits the ‘<code class="property">my-bar</code>’
+      <p>Finally, the &lt;three&gt; element inherits the ‘<code class="property">x-bar</code>’
         value <em>after</em> token stream substitution (in other words, it sees
         the value ‘<code class="css">calc(10px + 10px)</code>’), and then
-        redefines ‘<code class="property">my-foo</code>’ in terms of that value.
+        redefines ‘<code class="property">x-foo</code>’ in terms of that value.
         <br>
       </p>
-      <p>Since the value it inherited for ‘<code class="property">my-bar</code>’
-        no longer contains a reference to the ‘<code class="property">my-foo</code>’
-        property defined on &lt;one&gt;, defining ‘<code class="property">my-foo</code>’
-        using ‘<code class="css">get(my-bar)</code>’ is not cyclic, and actually
+      <p>Since the value it inherited for ‘<code class="property">x-bar</code>’
+        no longer contains a reference to the ‘<code class="property">x-foo</code>’
+        property defined on &lt;one&gt;, defining ‘<code class="property">x-foo</code>’
+        using ‘<code class="css">get(x-bar)</code>’ is not cyclic, and actually
         defines a value that will eventually (when referenced as a token stream
         in a normal property) resolve to ‘<code class="css">30px</code>’. </p>
     </div>
@@ -580,7 +569,7 @@ three { my-foo: calc(get(my-bar) + 10px); }</pre>
     <div class="issue">
       <p>The CSS Custom Properties editors would like to lift the 'custom
         property' restriction here.</p>
-      <p>This is the reason why we require the 'my-' prefix to be typed in the
+      <p>This is the reason why we require the 'x-' prefix to be typed in the
         property references defined in this specification. Otherwise, it would
         make inconsistent of difficult its extension to all properties.<br>
       </p>
@@ -648,17 +637,17 @@ href="#value-type"><var>&lt;value&gt;</var></a> ]? ]? )</pre>
     </p>
     <div class="example">
       <p> For example, the following code defines and references a custom
-        property named "my-main-color". </p>
+        property named "x-main-color". </p>
       <pre>:root { 
-    my-main-color: blue;
+    x-main-color: blue;
 }
 
 h1 { 
-    color: get(my-main-color);
+    color: get(x-main-color);
 }<br></pre>
     </div>
     <div class="issue">
-      <p>Shouldn't we add a <code class="css">get(local my-property)</code>
+      <p>Shouldn't we add a <code class="css">get(local x-property)</code>
         notation that would only be valid if the property is explicitly declared
         on the element, and would not take in consideration the
         inherited/initial value?</p>
@@ -722,9 +711,9 @@ h1 {
 &lt;/div&gt;
 &lt;style&gt;<br>
 .comment {
-    my-bg1: get(parent my-bg2, white);
-    my-bg2: get(parent my-bg1, silver);
-    background: get(my-bg1);
+    x-bg1: get(parent x-bg2, white);
+    x-bg2: get(parent x-bg1, silver);
+    background: get(x-bg1);
 }<br>
 &lt;/style&gt;</pre>
       <p> The ‘<code class="css">toggle()</code>’ notation can't be used here,
@@ -740,8 +729,8 @@ h1 {
         they're used, they can pass these values through the document without
         these kinds of side effects. </p>
       <p> The local ‘<code class="css">get()</code>’ notation can't be used here
-        either as it would immediately produce a cycle between '<code class="css">my-bg</code>'
-        and '<code class="css">my-bg2</code>', making them both invalid. </p>
+        either as it would immediately produce a cycle between '<code class="css">x-bg</code>'
+        and '<code class="css">x-bg2</code>', making them both invalid. </p>
     </div>
     <h3 id="using-invalid-references"><span class="secno">3.4. </span> Using
       invalid token streams</h3>
@@ -764,9 +753,9 @@ h1 {
       respectively. </p>
     <div class="example">
       <p>For example, in the following code: </p>
-      <pre>:root { my-bad-color: 20px; }
+      <pre>:root { x-bad-color: 20px; }
 p { background-color: red; }
-p { background-color: get(my-bad-color); }</pre>
+p { background-color: get(x-bad-color); }</pre>
       <p>the &lt;p&gt; elements will have transparent backgrounds (the initial
         value for ‘<code class="property">background-color</code>’), rather than
         red backgrounds. The same would happen if the reference itself was
@@ -833,10 +822,10 @@ p { background-color: get(my-bad-color); }</pre>
       </p>
       <p>The most natural way seems to be to first, set up a getter behavior on
         the interface somehow that deals with custom properties, and second, set
-        up a '<code>my</code>' map that exposes the custom properties that
-        aren't set to their initial value. <br>
+        up a 'x' map that exposes the custom properties that aren't set to their
+        initial value. <br>
       </p>
-      <pre>document.body.style.my.property === document.body.style['my-property']<br></pre>
+      <pre>document.body.style.x.property === document.body.style['x-property']<br></pre>
     </div>
     <h2 id="conformance"><span class="secno">5. </span> Conformance</h2>
     <h3 id="conventions"><span class="secno">5.1. </span> Document Conventions</h3>
@@ -1039,7 +1028,7 @@ p { background-color: get(my-bad-color); }</pre>
       </thead>
       <tbody>
         <tr>
-          <th><a class="property" href="#var-">my-*</a> </th>
+          <th><a class="property" href="#var-">x-*</a> </th>
           <td>&lt;value&gt; </td>
           <td>(nothing, see prose) </td>
           <td>all elements </td>
